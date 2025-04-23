@@ -1,6 +1,6 @@
 using System.Collections;
 using DG.Tweening;
-using ECM2;
+using ECM2.Examples.FirstPerson;
 using UnityEngine;
 
 namespace CodeBase
@@ -36,7 +36,7 @@ namespace CodeBase
         [SerializeField] private bool _headBobbingEnabled = true;
 
         [Header("References")]
-        [SerializeField] private Character _character;
+        [SerializeField] private FirstPersonCharacter _character;
         [SerializeField] private Transform _cameraTransform;
         
         private float _defaultYPosition;
@@ -81,40 +81,52 @@ namespace CodeBase
 
         private void Start()
         {
-            _character.Landed += CharacterOnLanded;
+            _character.Landed += PerformLandBobbing;
+            _character.CharacterMovementUpdated += OnMovementModeChanged;
         }
 
         private void OnDestroy()
         {
-            _character.Landed -= CharacterOnLanded;
+            _character.Landed -= PerformLandBobbing;
+            _character.CharacterMovementUpdated -= OnMovementModeChanged;
         }
 
-        private void CharacterOnLanded(Vector3 landingVelocity)
+        #region Reset
+
+        private void Reset()
         {
-            if (!_headBobbingEnabled) return;
+            // Walk Settings
+            _walkBobVerticalFrequency = 14f;
+            _walkBobVerticalAmplitude = 0.05f;
+            _walkBobHorizontalFrequency = 10f;
+            _walkBobHorizontalAmplitude = 0.05f;
 
-            if (_landingShakeTween != null)
-            {
-                _landingShakeTween.Kill();
-                _landingShakeTween = null;
-            }
+            // Sprint Settings
+            _sprintBobVerticalFrequency = 18f;
+            _sprintBobVerticalAmplitude = 0.1f;
+            _sprintBobHorizontalFrequency = 14f;
+            _sprintBobHorizontalAmplitude = 0.1f;
 
-            float velocityMagnitude = landingVelocity.magnitude;
-            float normalizedIntensity = Mathf.Clamp01(velocityMagnitude / 10f);
-            float adjustedIntensity = _landingShakeIntensity * normalizedIntensity;
+            // Landing Settings
+            _landingShakeIntensity = 0.1f;
+            _landingShakeDuration = 0.3f;
+            _landingShakeVibrato = 10;
+            _landingShakeRandomness = 90f;
 
-            _landingShakeTween = _cameraTransform.DOShakePosition(
-                _landingShakeDuration,
-                adjustedIntensity,
-                _landingShakeVibrato,
-                _landingShakeRandomness
-            ).SetEase(Ease.OutQuad).OnComplete(() => 
-            {
-                _landingShakeTween = null;
-                ResetCameraPosition();
-            });
+            // General Settings
+            _stopBobbingTimeInSeconds = 0.25f;
+            _bobbingSmoothTime = 12.5f;
+            _bobStartLerpSpeed = 5f;
+            _bobTransitionSpeed = 5f;
+            _headBobbingEnabled = true;
+
+            // References (try to auto-assign if possible)
+            _character = GetComponent<FirstPersonCharacter>();
+            _cameraTransform = GetComponentInChildren<Camera>()?.transform;
         }
 
+        #endregion
+        
         public void ToggleHeadBob(bool bobbingEnabled)
         {
             _headBobbingEnabled = bobbingEnabled;
@@ -124,7 +136,7 @@ namespace CodeBase
             StopBobbing();
             ResetCameraPosition();
         }
-        
+
         private void SetMoving(bool isMoving, bool isSprinting = false)
         {
             if (_isMoving == isMoving && _isSprinting == isSprinting)
@@ -164,7 +176,7 @@ namespace CodeBase
             _resetCameraPositionTween?.Kill();
             _resetCameraPositionTween = null;
         }
-        
+
         private void StopBobbing()
         {
             if (_bobbingRoutine == null) return;
@@ -190,7 +202,7 @@ namespace CodeBase
             _cameraTransform.localPosition = Vector3.MoveTowards(
                 _cameraTransform.localPosition, targetPosition, Time.deltaTime * _bobbingSmoothTime);
         }
-        
+
         private IEnumerator HeadBobRoutine()
         {
             while (_isMoving)
@@ -200,7 +212,35 @@ namespace CodeBase
             }
         }
 
-        private void MoveStateChanged(bool isMoving, bool isSprinting) 
-            => SetMoving(isMoving, isSprinting);
+        private void PerformLandBobbing(Vector3 landingVelocity)
+        {
+            if (!_headBobbingEnabled) return;
+
+            if (_landingShakeTween != null)
+            {
+                _landingShakeTween.Kill();
+                _landingShakeTween = null;
+            }
+
+            float velocityMagnitude = landingVelocity.magnitude;
+            float normalizedIntensity = Mathf.Clamp01(velocityMagnitude / 10f);
+            float adjustedIntensity = _landingShakeIntensity * normalizedIntensity;
+
+            _landingShakeTween = _cameraTransform.DOShakePosition(
+                duration: _landingShakeDuration,
+                strength: new Vector3(0f, adjustedIntensity, 0f), 
+                vibrato: _landingShakeVibrato, 
+                randomness: _landingShakeRandomness, 
+                snapping: false, 
+                fadeOut: true
+            ).SetEase(Ease.OutQuad).OnComplete(() =>
+            {
+                _landingShakeTween = null;
+                ResetCameraPosition();
+            });
+        }
+
+        private void OnMovementModeChanged(float magnitude) 
+            => SetMoving(_character.GetMovementDirection() != Vector3.zero);
     }
 }

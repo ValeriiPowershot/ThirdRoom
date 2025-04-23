@@ -15,6 +15,9 @@ MonoBehaviour:
   folderDatas_byGuid:
     keys:
     - 7fde1b2681369744a938b35e7ba912a7
+    - 358810092d4edce468f78136079e614e
     values:
-    - colorIndex: 3
+    - colorIndex: 2
+      iconNameOrGuid: 
+    - colorIndex: 1
       iconNameOrGuid: 
