@@ -69,10 +69,10 @@ MonoBehaviour:
   Path: ../ThirdRoomAudio/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638810937327072402
+  lastModified: 638811109649033688
   FileSizes:
   - Name: Desktop
-    Value: 42656
+    Value: 122368
   Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -92,18 +92,48 @@ MonoBehaviour:
   EditorEvents:
   - {fileID: -4271082436278233616}
   - {fileID: -6522696279935744226}
+  - {fileID: 6343958791683186610}
   EditorParameters: []
   MasterBanks:
   - {fileID: -2783524414828994060}
   StringsBanks:
   - {fileID: 6826854656128104262}
   cacheVersion: 131847
-  cacheTime: 638810937327087067
+  cacheTime: 638811109649063899
   SerializableEventsDict:
   - key: event:/Character/Player/Footsteps_conrete
     index: 0
   - key: snapshot:/Reverb
     index: 1
+  - key: event:/Character/Mind/Whispers
+    index: 2
+--- !u!114 &6343958791683186610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Character/Mind/Whispers
+  m_EditorClassIdentifier: 
+  Path: event:/Character/Mind/Whispers
+  Guid:
+    Data1: 1062424127
+    Data2: 1251812650
+    Data3: 223884216
+    Data4: 286287807
+  Banks:
+  - {fileID: -2783524414828994060}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1705
 --- !u!114 &6826854656128104262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,8 +149,8 @@ MonoBehaviour:
   Path: ../ThirdRoomAudio/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638810937327087067
+  lastModified: 638811109649063899
   FileSizes:
   - Name: Desktop
-    Value: 834
+    Value: 890
   Exists: 1

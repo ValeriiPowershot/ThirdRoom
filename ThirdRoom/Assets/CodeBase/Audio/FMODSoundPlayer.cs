@@ -35,6 +35,12 @@ namespace CodeBase.Audio
             ReleaseEvent();
         }
 
+        private void Update()
+        {
+            if (_is3DEvent && _isInitialized) 
+                _eventInstance.set3DAttributes(gameObject.To3DAttributes());
+        }
+
         private void InitializeEvent()
         {
             if (_soundEvent.IsNull)
@@ -116,10 +122,5 @@ namespace CodeBase.Audio
         }
 
         // Optional: Update 3D attributes every frame for moving objects
-        private void Update()
-        {
-            if (_is3DEvent && _isInitialized) 
-                _eventInstance.set3DAttributes(gameObject.To3DAttributes());
-        }
     }
 }
