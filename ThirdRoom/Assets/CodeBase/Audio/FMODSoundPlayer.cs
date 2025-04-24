@@ -41,37 +41,6 @@ namespace CodeBase.Audio
                 _eventInstance.set3DAttributes(gameObject.To3DAttributes());
         }
 
-        private void InitializeEvent()
-        {
-            if (_soundEvent.IsNull)
-            {
-                Debug.LogWarning($"FMOD event path is not set on {gameObject.name}");
-                return;
-            }
-
-            try
-            {
-                _eventInstance = RuntimeManager.CreateInstance(_soundEvent);
-
-                if (_is3DEvent)
-                {
-                    RuntimeManager.AttachInstanceToGameObject(_eventInstance, transform, GetComponent<Rigidbody>());
-                }
-
-                // Initialize parameters
-                foreach (FMODParameter param in _parameters)
-                {
-                    _eventInstance.setParameterByName(param.Name, param.DefaultValue);
-                }
-
-                _isInitialized = true;
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogError($"Failed to initialize FMOD event {_soundEvent} on {gameObject.name}: {e.Message}");
-            }
-        }
-
         public void Play()
         {
             if (!_isInitialized) return;
@@ -111,6 +80,40 @@ namespace CodeBase.Audio
             else
             {
                 RuntimeManager.PlayOneShot(_soundEvent);
+            }
+        }
+
+        public void LoadReference(EventReference eventReference)
+            => _soundEvent = eventReference;
+        
+        private void InitializeEvent()
+        {
+            if (_soundEvent.IsNull)
+            {
+                Debug.LogWarning($"FMOD event path is not set on {gameObject.name}");
+                return;
+            }
+
+            try
+            {
+                _eventInstance = RuntimeManager.CreateInstance(_soundEvent);
+
+                if (_is3DEvent)
+                {
+                    RuntimeManager.AttachInstanceToGameObject(_eventInstance, transform, GetComponent<Rigidbody>());
+                }
+
+                // Initialize parameters
+                foreach (FMODParameter param in _parameters)
+                {
+                    _eventInstance.setParameterByName(param.Name, param.DefaultValue);
+                }
+
+                _isInitialized = true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"Failed to initialize FMOD event {_soundEvent} on {gameObject.name}: {e.Message}");
             }
         }
 

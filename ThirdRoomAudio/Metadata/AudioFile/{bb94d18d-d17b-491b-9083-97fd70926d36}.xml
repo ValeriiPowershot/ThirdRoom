@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{bb94d18d-d17b-491b-9083-97fd70926d36}">
+		<property name="assetPath">
+			<value>Environment/TV/Whispers/TV_whispering - Trimmed (2).wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>1.8945351473922902</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{fc8b0019-5d5f-4509-b27e-5c6a720899fb}</destination>
+		</relationship>
+	</object>
+</objects>

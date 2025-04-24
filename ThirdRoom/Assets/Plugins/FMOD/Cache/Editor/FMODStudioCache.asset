@@ -69,11 +69,38 @@ MonoBehaviour:
   Path: ../ThirdRoomAudio/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638811125813537638
+  lastModified: 638811313217823063
   FileSizes:
   - Name: Desktop
-    Value: 122368
+    Value: 237312
   Exists: 1
+--- !u!114 &-1745548094912810293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Environment/TV_white_noise
+  m_EditorClassIdentifier: 
+  Path: event:/Environment/TV_white_noise
+  Guid:
+    Data1: -196304780
+    Data2: 1144136584
+    Data3: 1425492365
+    Data4: -1815681622
+  Banks:
+  - {fileID: -2783524414828994060}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 7775
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,13 +120,15 @@ MonoBehaviour:
   - {fileID: -4271082436278233616}
   - {fileID: -6522696279935744226}
   - {fileID: 6343958791683186610}
+  - {fileID: -1745548094912810293}
+  - {fileID: 2383513028807391585}
   EditorParameters: []
   MasterBanks:
   - {fileID: -2783524414828994060}
   StringsBanks:
   - {fileID: 6826854656128104262}
   cacheVersion: 131847
-  cacheTime: 638811125813593292
+  cacheTime: 638811313217838690
   SerializableEventsDict:
   - key: event:/Character/Player/Footsteps_conrete
     index: 0
@@ -107,6 +136,37 @@ MonoBehaviour:
     index: 1
   - key: event:/Character/Mind/Whispers
     index: 2
+  - key: event:/Environment/TV_white_noise
+    index: 3
+  - key: event:/Environment/TV_whispers
+    index: 4
+--- !u!114 &2383513028807391585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Environment/TV_whispers
+  m_EditorClassIdentifier: 
+  Path: event:/Environment/TV_whispers
+  Guid:
+    Data1: -1595452897
+    Data2: 1185269710
+    Data3: -1170533998
+    Data4: -1315406775
+  Banks:
+  - {fileID: -2783524414828994060}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1941
 --- !u!114 &6343958791683186610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,8 +209,8 @@ MonoBehaviour:
   Path: ../ThirdRoomAudio/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638811125813593292
+  lastModified: 638811313217838690
   FileSizes:
   - Name: Desktop
-    Value: 890
+    Value: 1006
   Exists: 1

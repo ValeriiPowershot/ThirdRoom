@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="EncodableAsset" id="{3d922f62-8a1c-4a01-9f5a-46bc76dcf207}">
+		<property name="assetPath">
+			<value>Environment/TV/Whispers/</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{fc8b0019-5d5f-4509-b27e-5c6a720899fb}</destination>
+		</relationship>
+	</object>
+</objects>
