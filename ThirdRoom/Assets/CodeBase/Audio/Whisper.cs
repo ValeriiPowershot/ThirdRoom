@@ -12,10 +12,10 @@ namespace CodeBase.Audio
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.F))
-                SpawnWhisper();
+                Play();
         }
 
-        private void SpawnWhisper()
+        public void Play()
         {
             Vector3 randomPosition = Random.insideUnitSphere;
             FMODAudioManager.Instance.PlayOneShot(_whisperEvent, randomPosition);
