@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using ECM2.Examples.FirstPerson;
@@ -8,6 +9,8 @@ namespace CodeBase
     [DisallowMultipleComponent]
     public class HeadBobbing : MonoBehaviour
     {
+        public event Action OnStepDown;
+        
         [Header("Walk Settings")] 
         [SerializeField] private float _walkBobVerticalFrequency = 14f;
         [SerializeField] private float _walkBobVerticalAmplitude = 0.05f;
@@ -51,6 +54,8 @@ namespace CodeBase
         private float _targetFrequencyX;
         private float _targetAmplitudeY;
         private float _targetAmplitudeX;
+
+        private float _lastSinY;
 
         private float BobbingFrequencyY => Mathf.Lerp(_targetFrequencyY,
             _isSprinting ? _sprintBobVerticalFrequency : _walkBobVerticalFrequency,
@@ -196,8 +201,14 @@ namespace CodeBase
 
             Vector3 originalPosition = _cameraTransform.localPosition;
             Vector3 targetPosition = originalPosition;
-            targetPosition.y = _defaultYPosition + Mathf.Sin(_timerY) * BobbingAmplitudeY;
+            float sinY = Mathf.Sin(_timerY);
+            targetPosition.y = _defaultYPosition + sinY * BobbingAmplitudeY;
             targetPosition.x = _defaultXPosition + Mathf.Cos(_timerX / 2) * BobbingAmplitudeX;
+
+            if (_lastSinY > -0.99f && sinY <= -0.99f) 
+                OnStepDown?.Invoke();
+            
+            _lastSinY = sinY;
 
             _cameraTransform.localPosition = Vector3.MoveTowards(
                 _cameraTransform.localPosition, targetPosition, Time.deltaTime * _bobbingSmoothTime);

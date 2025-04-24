@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{10982500-4ef9-49f6-9f96-e566fc53c564}">
+		<property name="assetPath">
+			<value>Footsteps/Concrete/footsteps_concrete - Trimmed (2).wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.20181405895691609</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{fc8b0019-5d5f-4509-b27e-5c6a720899fb}</destination>
+		</relationship>
+	</object>
+</objects>

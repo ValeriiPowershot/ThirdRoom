@@ -1,5 +1,59 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6522696279935744226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: snapshot:/Reverb
+  m_EditorClassIdentifier: 
+  Path: snapshot:/Reverb
+  Guid:
+    Data1: -360548617
+    Data2: 1123359815
+    Data3: 400441251
+    Data4: 1258724411
+  Banks:
+  - {fileID: -2783524414828994060}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 0
+--- !u!114 &-4271082436278233616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Character/Player/Footsteps_conrete
+  m_EditorClassIdentifier: 
+  Path: event:/Character/Player/Footsteps_conrete
+  Guid:
+    Data1: -967439855
+    Data2: 1337456266
+    Data3: -389642363
+    Data4: -1365490744
+  Banks:
+  - {fileID: -2783524414828994060}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 306
 --- !u!114 &-2783524414828994060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15,10 +69,10 @@ MonoBehaviour:
   Path: ../ThirdRoomAudio/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638810507528237464
+  lastModified: 638810937327072402
   FileSizes:
   - Name: Desktop
-    Value: 1036
+    Value: 42656
   Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -35,15 +89,21 @@ MonoBehaviour:
   EditorBanks:
   - {fileID: 6826854656128104262}
   - {fileID: -2783524414828994060}
-  EditorEvents: []
+  EditorEvents:
+  - {fileID: -4271082436278233616}
+  - {fileID: -6522696279935744226}
   EditorParameters: []
   MasterBanks:
   - {fileID: -2783524414828994060}
   StringsBanks:
   - {fileID: 6826854656128104262}
   cacheVersion: 131847
-  cacheTime: 638810507528257512
-  SerializableEventsDict: []
+  cacheTime: 638810937327087067
+  SerializableEventsDict:
+  - key: event:/Character/Player/Footsteps_conrete
+    index: 0
+  - key: snapshot:/Reverb
+    index: 1
 --- !u!114 &6826854656128104262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,8 +119,8 @@ MonoBehaviour:
   Path: ../ThirdRoomAudio/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638810507528257512
+  lastModified: 638810937327087067
   FileSizes:
   - Name: Desktop
-    Value: 712
+    Value: 834
   Exists: 1

@@ -8,7 +8,7 @@
 [LOG] Thread::initThread                       : Init FMOD stream thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFB, Stack Size: 98304, Semaphore: No, Sleep Time: 10, Looping: Yes.
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 0
 [LOG] Thread::initThread                       : Init FMOD mixer thread. Affinity: 0x4000000000000001, Priority: 0xFFFF7FFA, Stack Size: 81920, Semaphore: No, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncManager::init                       : manager 00000184EB06B5E8 isAsync 0 updatePeriod 0.02
+[LOG] AsyncManager::init                       : manager 00000265AF3AE638 isAsync 0 updatePeriod 0.02
 [LOG] AsyncManager::init                       : done
 [LOG] PlaybackSystem::init                     : 
 [LOG] Thread::initThread                       : Init FMOD Studio sample load thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
@@ -19,6 +19,36 @@
 [LOG] BankLoader::serializeBank                : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 146)
 [LOG] BankLoader::serializeBank                : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 146)
 [LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6
+[LOG] SoundI::release                          :  (000002646E01B0A8)
+[LOG] SoundI::release                          :     footsteps_concrete - Trimmed (10) (0000026539AE93A8)
+[LOG] SoundI::release                          :  (000002645E4415E8)
+[LOG] SoundI::release                          :     footsteps_concrete - Trimmed (2) (000002654419D048)
+[LOG] SoundI::release                          :  (000002645E441068)
+[LOG] SoundI::release                          :     footsteps_concrete - Trimmed (3) (000002654419D348)
+[LOG] SoundI::release                          :  (000002646E01BE68)
+[LOG] SoundI::release                          :     footsteps_concrete - Trimmed (4) (0000026539AE96A8)
+[LOG] SoundI::release                          :  (000002645E4411C8)
+[LOG] SoundI::release                          :     footsteps_concrete - Trimmed (5) (000002654419D4C8)
+[LOG] SoundI::release                          :  (0000026437018118)
+[LOG] SoundI::release                          :     footsteps_concrete - Trimmed (6) (000002654419D648)
+[LOG] SoundI::release                          :  (000002646E01B8E8)
+[LOG] SoundI::release                          :     footsteps_concrete - Trimmed (7) (0000026479185088)
+[LOG] SoundI::release                          :  (000002646E01BD08)
+[LOG] SoundI::release                          :     footsteps_concrete - Trimmed (8) (0000026539AE9528)
+[LOG] SoundI::release                          :  (000002646E01B788)
+[LOG] SoundI::release                          :     footsteps_concrete - Trimmed (9) (0000026479185E08)
+[LOG] SoundI::release                          :  (0000026437018278)
+[LOG] SoundI::release                          :     footsteps_concrete - Trimmed (0000026539AE9228)
+[LOG] Thread::callback                         : FMOD Studio update thread finished.
+[LOG] Thread::callback                         : FMOD Studio bank load thread finished.
+[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
+[LOG] Thread::callback                         : FMOD Studio sample load thread finished.
+[LOG] LiveUpdate::release                      : 
+[LOG] LiveUpdate::reset                        : Reset connection (reason Disconnected)
+[LOG] Thread::callback                         : FMOD stream thread finished.
+[LOG] Thread::callback                         : FMOD mixer thread finished.
+[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
+[LOG] SystemI::closeInternal                   : Closed.
 [LOG] Thread::callback                         : FMOD Studio bank load thread finished.
 [LOG] Thread::callback                         : FMOD Studio sample load thread finished.
 [LOG] LiveUpdate::release                      : 
