@@ -1,7 +1,8 @@
 using System;
+using Codebase.Logic.Interactions;
 using UnityEngine;
 
-namespace Codebase.Logic.Interactions
+namespace CodeBase.Interactions
 {
     [DisallowMultipleComponent]
     public abstract class InteractObject : MonoBehaviour, IInteractable

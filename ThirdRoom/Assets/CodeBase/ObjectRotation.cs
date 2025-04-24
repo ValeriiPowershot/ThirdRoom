@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CodeBase
 {
@@ -14,10 +15,13 @@ namespace CodeBase
         [SerializeField] private float _rotationSpeed = 10f;
         [SerializeField] private bool _isActivate;
         [SerializeField] private bool _isScalingObject;
+        [SerializeField] private Transform _pocketPoint;
+        
+        public Rigidbody Rigidbody;
 
+        
         private Transform _selectedDisposePosition;
         private Transform _selectedObject;
-        private Transform _pocketPoint;
 
         private Vector3 _lastMousePosition;
         private Vector2 _rotationInput;
