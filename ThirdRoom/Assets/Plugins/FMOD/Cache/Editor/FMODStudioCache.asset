@@ -69,7 +69,7 @@ MonoBehaviour:
   Path: ../ThirdRoomAudio/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638811109649033688
+  lastModified: 638811125813537638
   FileSizes:
   - Name: Desktop
     Value: 122368
@@ -99,7 +99,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 6826854656128104262}
   cacheVersion: 131847
-  cacheTime: 638811109649063899
+  cacheTime: 638811125813593292
   SerializableEventsDict:
   - key: event:/Character/Player/Footsteps_conrete
     index: 0
@@ -149,7 +149,7 @@ MonoBehaviour:
   Path: ../ThirdRoomAudio/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638811109649063899
+  lastModified: 638811125813593292
   FileSizes:
   - Name: Desktop
     Value: 890
