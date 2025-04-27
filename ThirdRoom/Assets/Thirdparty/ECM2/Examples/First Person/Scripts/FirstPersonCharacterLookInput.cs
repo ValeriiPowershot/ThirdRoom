@@ -49,5 +49,7 @@ namespace ECM2.Examples.FirstPerson
         }
         
         public void ToggleMouseInput(bool active) => _enabled = active;
+        public void ToggleMouseCursor(bool active) =>
+            Cursor.lockState = active ? CursorLockMode.None : CursorLockMode.Locked;
     }
 }
