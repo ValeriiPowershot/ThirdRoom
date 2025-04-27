@@ -17,9 +17,6 @@ namespace CodeBase
         [SerializeField] private bool _isScalingObject;
         [SerializeField] private Transform _pocketPoint;
         
-        public Rigidbody Rigidbody;
-
-        
         private Transform _selectedDisposePosition;
         private Transform _selectedObject;
 
