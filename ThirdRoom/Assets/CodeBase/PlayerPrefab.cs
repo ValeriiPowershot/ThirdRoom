@@ -1,11 +1,34 @@
 ﻿using ECM2.Examples.FirstPerson;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace CodeBase.Infrastructure.Installers
+namespace CodeBase
 {
     public class PlayerPrefab : MonoBehaviour
     {
-        public FirstPersonCharacter FirstPersonCharacter;
-        public FirstPersonCharacterInput FirstPersonCharacterInput;
+        [SerializeField] private FirstPersonCharacterLookInput _firstPersonCharacterLookInput;
+        [SerializeField] private FirstPersonCharacterInput _firstPersonCharacterInput;
+
+        public void BlockInput()
+        {
+            _firstPersonCharacterInput.ToggleInput(false);
+            _firstPersonCharacterLookInput.ToggleMouseInput(false);
+        }
+
+        public void UnblockInput()
+        {
+            _firstPersonCharacterInput.ToggleInput(true);
+            _firstPersonCharacterLookInput.ToggleMouseInput(true);
+        }
+
+        public void LockCursor()
+        {
+            _firstPersonCharacterLookInput.ToggleMouseCursor(true);
+        }
+
+        public void UnlockCursor()
+        {
+            _firstPersonCharacterLookInput.ToggleMouseCursor(false);
+        }
     }
 }
