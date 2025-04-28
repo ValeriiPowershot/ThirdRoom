@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
+using CodeBase.Data;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CodeBase
 {
@@ -16,10 +18,9 @@ namespace CodeBase
         [SerializeField] private CanvasGroup _mainCanvasGroup;
         [SerializeField] private CanvasGroup _backgroundCanvasGroup;
         [SerializeField] private CanvasGroup _headerCanvasGroup;
-        [SerializeField] private CanvasGroup _pressKeyCanvasGroup;
+        [SerializeField] private CanvasGroup _hintsCanvasGroup;
         [SerializeField] private TextMeshProUGUI _headerText;
         [SerializeField] private TextMeshProUGUI _descriptionText;
-        [SerializeField] private TextMeshProUGUI _pressKeyText;
         [SerializeField] private string _header;
         [SerializeField, TextArea] private string _description;
         [SerializeField] private string _notificationItem;
@@ -36,11 +37,11 @@ namespace CodeBase
         
         private Transform _target;
 
-        public void Display(Transform target)
+        public void Display(Transform target, Item item)
         {
             _target = target;
-            _headerText.text = _header;
-            _descriptionText.text = "";
+            _headerText.text = item.ItemName;
+            _descriptionText.text = item.ItemDescription;
 
             StartCoroutine(DisplayRoutine());
         }
@@ -49,8 +50,7 @@ namespace CodeBase
         {
             _descriptionText.text = "";
             _headerText.text = "";
-            _pressKeyCanvasGroup.DOKill();
-            _pressKeyText.alpha = 0f;
+            _hintsCanvasGroup.DOKill();
         }
 
         private IEnumerator DisplayRoutine()
@@ -65,11 +65,7 @@ namespace CodeBase
                 yield return new WaitForSeconds(_delayBeforePrintingCharacter);
             }
             
-            yield return _pressKeyCanvasGroup.DOFade(1f, _alphaFadeDuration).WaitForCompletion();
-            
-            _pressKeyCanvasGroup.DOFade(0f, _blinkDuration).SetLoops(-1, LoopType.Yoyo);
-            
-            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.E));
+            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Escape));
 
             if (_shouldMoveToStash) OnMoveToStashRequested?.Invoke(_target);
             if (_shouldDestroy) OnDestroyRequested?.Invoke();

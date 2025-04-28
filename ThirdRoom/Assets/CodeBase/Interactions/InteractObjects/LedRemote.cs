@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using DG.Tweening;
 using ECM2.Examples.FirstPerson;
 using UnityEngine;
-using UnityEngine.UI;
 using static UnityEngine.Screen;
 
 namespace CodeBase.Interactions.InteractObjects
@@ -17,6 +16,7 @@ namespace CodeBase.Interactions.InteractObjects
 		[SerializeField] private Color _requiredColor;
 		public Action OnRequiredColorSelected;
 		public Action OnNonRequiredColorSelected;
+		
 		private void Start()
 		{
 			Deactivate();

@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Zenject;
 
 namespace CodeBase
 {
@@ -16,37 +17,41 @@ namespace CodeBase
         [SerializeField] private bool _isActivate;
         [SerializeField] private bool _isScalingObject;
         [SerializeField] private Transform _pocketPoint;
+
+        public Transform SelectedObject { get; set; }
         
         private Transform _selectedDisposePosition;
-        private Transform _selectedObject;
 
         private Vector3 _lastMousePosition;
         private Vector2 _rotationInput;
 
-
+        private PlayerPrefab _playerPrefab;
+        
         private Vector3 _selectedObjectScale = new(0.24f, 0.3897f, 0.0032f);
 
+        [Inject]
+        public void Construct(PlayerPrefab playerPrefab)
+        {
+            _playerPrefab = playerPrefab;
+        }
+        
         private void Update()
         {
-            if (!Input.GetMouseButton(0)) return;
-            if (!_isActivate) return;
-
-            _rotationInput.x = Input.GetAxis(HorizontalAxis);
-            _rotationInput.y = Input.GetAxis(VerticalAxis);
-            RotateObject();
+            HandleEscapeInput();
+            HandleMouseInput();
         }
 
         public void Activate(Transform selectedObject, bool isScaling, Action onMoved = null)
         {
             _isActivate = true;
-            _selectedObject = selectedObject;
+            SelectedObject = selectedObject;
             if (isScaling)
             {
-                _selectedObject.DOScale(_selectedObjectScale, _selectedObjectScaleDuration);
+                SelectedObject.DOScale(_selectedObjectScale, _selectedObjectScaleDuration);
             }
 
-            _selectedObject.SetParent(_pocketPoint);
-            _selectedObject.DOLocalMove(Vector3.zero, 1f).OnComplete(() =>
+            SelectedObject.SetParent(_pocketPoint);
+            SelectedObject.DOLocalMove(Vector3.zero, 1f).OnComplete(() =>
             {
                 _isActivate = true;
                 onMoved?.Invoke();
@@ -56,16 +61,56 @@ namespace CodeBase
         
         public void Deactivate()
         {
-            _selectedObject = null;
+            SelectedObject = null;
             _isActivate = false;
+        }
+        
+        private void HandleEscapeInput()
+        {
+            if (!Input.GetKeyDown(KeyCode.Escape))
+                return;
+
+            if (SelectedObject == null)
+                return;
+
+            Obtainer obtainer = SelectedObject.GetComponent<Obtainer>();
+
+            ResetSelectedObjectTransform(obtainer);
+
+            _playerPrefab.UnblockInput();
+            Deactivate();
+        }
+
+        private void HandleMouseInput()
+        {
+            if (!Input.GetMouseButton(0))
+                return;
+    
+            if (!_isActivate)
+                return;
+
+            _rotationInput.x = Input.GetAxis(HorizontalAxis);
+            _rotationInput.y = Input.GetAxis(VerticalAxis);
+
+            RotateObject();
+        }
+
+        private void ResetSelectedObjectTransform(Obtainer obtainer)
+        {
+            SelectedObject.SetParent(null, true);
+    
+            DOTween.Kill(SelectedObject.transform);
+    
+            SelectedObject.DOMove(obtainer.StartPosition, 1);
+            SelectedObject.DORotate(obtainer.StartRotation, 1);
         }
         
         private void RotateObject()
         {
             float rotationX = _rotationInput.y * _rotationSpeed * Time.deltaTime;
             float rotationY = -_rotationInput.x * _rotationSpeed * Time.deltaTime;
-            _selectedObject.Rotate(Camera.main.transform.up, rotationY, Space.World);
-            _selectedObject.Rotate(Camera.main.transform.right, rotationX, Space.World);
+            SelectedObject.Rotate(Camera.main.transform.up, rotationY, Space.World);
+            SelectedObject.Rotate(Camera.main.transform.right, rotationX, Space.World);
         }
     }
 }
