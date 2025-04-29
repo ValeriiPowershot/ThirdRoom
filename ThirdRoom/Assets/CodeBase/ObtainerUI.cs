@@ -19,8 +19,14 @@ namespace CodeBase
         [SerializeField] private CanvasGroup _backgroundCanvasGroup;
         [SerializeField] private CanvasGroup _headerCanvasGroup;
         [SerializeField] private CanvasGroup _hintsCanvasGroup;
+        [SerializeField] private CanvasGroup _fullDescriptionCanvasGroup;
         [SerializeField] private TextMeshProUGUI _headerText;
         [SerializeField] private TextMeshProUGUI _descriptionText;
+        [Header("Full Description")]
+        [SerializeField] private TextMeshProUGUI _titleText;
+        [SerializeField] private TextMeshProUGUI _fulldDescriptionText;
+        [Space(10)]
+        
         [SerializeField] private string _header;
         [SerializeField, TextArea] private string _description;
         [SerializeField] private string _notificationItem;

@@ -28,7 +28,15 @@ namespace CodeBase
 
         [Space(10)]
         [SerializeField] private float _returnSpeed;
-
+        
+        [Space(10)]
+        [Header("Full Description")]
+        [SerializeField] private bool _hasFullDescription;
+        [SerializeField] private string _title;
+        
+        [TextArea(3, 10)]
+        [SerializeField] private string _description;
+        
         public Vector3 StartPosition { get; set; }
         public Vector3 StartRotation { get; set; }
 
@@ -73,11 +81,16 @@ namespace CodeBase
 
         private void Update()
         {
-            if (_isInspecting && Input.GetKeyDown(KeyCode.Return))
+            if (_isInspecting && Input.GetKeyDown(KeyCode.E))
             {
                 ConfirmObtain();
             }
+            if (_isInspecting && Input.GetKeyDown(KeyCode.KeypadEnter))
+            {
+                ShowFullDescription();
+            }
         }
+        
 
         protected override void OnInteract()
         {
@@ -106,6 +119,11 @@ namespace CodeBase
             _isInspecting = true;
         }
 
+        private void ShowFullDescription()
+        {
+            
+        }
+        
         private void ConfirmObtain()
         {
             if (_currentItem == null) return;
