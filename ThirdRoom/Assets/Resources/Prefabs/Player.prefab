@@ -462,6 +462,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8006ca18d5d4e3e9368c3fa69722140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Interactor>k__BackingField: {fileID: 7879632695421166876}
+  <FirstPersonCharacter>k__BackingField: {fileID: 4665769623508636026}
   _firstPersonCharacterLookInput: {fileID: 7309293967815610595}
   _firstPersonCharacterInput: {fileID: 8046199524083878616}
 --- !u!1 &9188117306704203182

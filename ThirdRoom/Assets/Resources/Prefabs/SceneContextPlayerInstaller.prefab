@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5239865764470227538}
   - component: {fileID: 3144362817926571715}
+  - component: {fileID: 334376762296709630}
   - component: {fileID: 3658742063025064605}
   m_Layer: 0
   m_Name: SceneContextPlayerInstaller
@@ -47,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
+  - {fileID: 334376762296709630}
   - {fileID: 3658742063025064605}
   _installerPrefabs: []
   _autoRun: 1
@@ -65,6 +67,19 @@ MonoBehaviour:
   _parentNewObjectsUnderSceneContext: 0
   _contractNames: []
   _parentContractNames: []
+--- !u!114 &334376762296709630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4112207848268190841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcc53259299643f297ac4426e574d4b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fmodAudioPlayer: {fileID: 254026137202400705, guid: eb8807777e01f464aa8f14c932173323, type: 3}
 --- !u!114 &3658742063025064605
 MonoBehaviour:
   m_ObjectHideFlags: 0

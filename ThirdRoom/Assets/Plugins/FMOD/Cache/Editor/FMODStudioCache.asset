@@ -1,5 +1,59 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7810172428289332238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Environment/TV/TV_whispers
+  m_EditorClassIdentifier: 
+  Path: event:/Environment/TV/TV_whispers
+  Guid:
+    Data1: -1595452897
+    Data2: 1185269710
+    Data3: -1170533998
+    Data4: -1315406775
+  Banks:
+  - {fileID: -2783524414828994060}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1941
+--- !u!114 &-7060698024757810938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Environment/Phone/Phone_pickup
+  m_EditorClassIdentifier: 
+  Path: event:/Environment/Phone/Phone_pickup
+  Guid:
+    Data1: -1445021626
+    Data2: 1174147473
+    Data3: 2145414057
+    Data4: 948025757
+  Banks:
+  - {fileID: -2783524414828994060}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 768
 --- !u!114 &-6522696279935744226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27,6 +81,33 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 0
+--- !u!114 &-5468948947516864530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Environment/Phone/Phone_dialing
+  m_EditorClassIdentifier: 
+  Path: event:/Environment/Phone/Phone_dialing
+  Guid:
+    Data1: 627689009
+    Data2: 1336912763
+    Data3: -1715500885
+    Data4: -1252345900
+  Banks:
+  - {fileID: -2783524414828994060}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 4303
 --- !u!114 &-4271082436278233616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,38 +150,11 @@ MonoBehaviour:
   Path: ../ThirdRoomAudio/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638812034240394119
+  lastModified: 638813853925648913
   FileSizes:
   - Name: Desktop
-    Value: 237312
+    Value: 693952
   Exists: 1
---- !u!114 &-1745548094912810293
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Environment/TV_white_noise
-  m_EditorClassIdentifier: 
-  Path: event:/Environment/TV_white_noise
-  Guid:
-    Data1: -196304780
-    Data2: 1144136584
-    Data3: 1425492365
-    Data4: -1815681622
-  Banks:
-  - {fileID: -2783524414828994060}
-  IsStream: 0
-  Is3D: 1
-  IsOneShot: 0
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 7775
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,15 +174,20 @@ MonoBehaviour:
   - {fileID: -4271082436278233616}
   - {fileID: -6522696279935744226}
   - {fileID: 6343958791683186610}
-  - {fileID: -1745548094912810293}
-  - {fileID: 2383513028807391585}
+  - {fileID: -7810172428289332238}
+  - {fileID: -5468948947516864530}
+  - {fileID: 8270199089293772295}
+  - {fileID: -7060698024757810938}
+  - {fileID: 2922212078902891349}
+  - {fileID: 5760432404956130233}
+  - {fileID: 7321320978053507409}
   EditorParameters: []
   MasterBanks:
   - {fileID: -2783524414828994060}
   StringsBanks:
   - {fileID: 6826854656128104262}
   cacheVersion: 131847
-  cacheTime: 638812034240464751
+  cacheTime: 638813853925674326
   SerializableEventsDict:
   - key: event:/Character/Player/Footsteps_conrete
     index: 0
@@ -136,11 +195,21 @@ MonoBehaviour:
     index: 1
   - key: event:/Character/Mind/Whispers
     index: 2
-  - key: event:/Environment/TV_white_noise
+  - key: event:/Environment/TV/TV_whispers
     index: 3
-  - key: event:/Environment/TV_whispers
+  - key: event:/Environment/Phone/Phone_dialing
     index: 4
---- !u!114 &2383513028807391585
+  - key: event:/Environment/Phone/Phone_test_voice
+    index: 5
+  - key: event:/Environment/Phone/Phone_pickup
+    index: 6
+  - key: event:/Environment/TV/TV_white_noise
+    index: 7
+  - key: event:/Environment/Phone/Phone_ringing
+    index: 8
+  - key: event:/Environment/Phone/Phone_hang_up
+    index: 9
+--- !u!114 &2922212078902891349
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -150,23 +219,50 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Environment/TV_whispers
+  m_Name: event:/Environment/TV/TV_white_noise
   m_EditorClassIdentifier: 
-  Path: event:/Environment/TV_whispers
+  Path: event:/Environment/TV/TV_white_noise
   Guid:
-    Data1: -1595452897
-    Data2: 1185269710
-    Data3: -1170533998
-    Data4: -1315406775
+    Data1: -196304780
+    Data2: 1144136584
+    Data3: 1425492365
+    Data4: -1815681622
   Banks:
   - {fileID: -2783524414828994060}
   IsStream: 0
   Is3D: 1
-  IsOneShot: 1
+  IsOneShot: 0
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 1941
+  Length: 7775
+--- !u!114 &5760432404956130233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Environment/Phone/Phone_ringing
+  m_EditorClassIdentifier: 
+  Path: event:/Environment/Phone/Phone_ringing
+  Guid:
+    Data1: 536485552
+    Data2: 1281842522
+    Data3: 176963979
+    Data4: 1486485290
+  Banks:
+  - {fileID: -2783524414828994060}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 3200
 --- !u!114 &6343958791683186610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,8 +305,62 @@ MonoBehaviour:
   Path: ../ThirdRoomAudio/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638812034240464751
+  lastModified: 638813853925674326
   FileSizes:
   - Name: Desktop
-    Value: 1006
+    Value: 1238
   Exists: 1
+--- !u!114 &7321320978053507409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Environment/Phone/Phone_hang_up
+  m_EditorClassIdentifier: 
+  Path: event:/Environment/Phone/Phone_hang_up
+  Guid:
+    Data1: -1740800588
+    Data2: 1219203967
+    Data3: 1556676031
+    Data4: 251346579
+  Banks:
+  - {fileID: -2783524414828994060}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 768
+--- !u!114 &8270199089293772295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Environment/Phone/Phone_test_voice
+  m_EditorClassIdentifier: 
+  Path: event:/Environment/Phone/Phone_test_voice
+  Guid:
+    Data1: 816272179
+    Data2: 1198856438
+    Data3: -946111082
+    Data4: -526782615
+  Banks:
+  - {fileID: -2783524414828994060}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 7000

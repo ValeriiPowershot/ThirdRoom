@@ -1,13 +1,17 @@
 ﻿using System.Collections;
 using CodeBase.Audio;
+using CodeBase.Interactions;
 using UnityEngine;
 using UnityEngine.Video;
 
 namespace CodeBase.Environment
 {
     [DisallowMultipleComponent]
-    public class TV : MonoBehaviour
+    public class TV : InteractObject
     {
+        [SerializeField] private Console _console;
+        
+        [Space]
         [SerializeField] private FMODSoundPlayer _soundPlayer;
         [SerializeField] private VideoPlayer _videoPlayer;
 
@@ -16,9 +20,14 @@ namespace CodeBase.Environment
         [SerializeField] private VideoClip _singleEyeClip;
         [SerializeField] private VideoClip _oceanClip;
         
-        private void Start() 
-            => StartCoroutine(StartTVAnimation());
+        protected override void OnInteract()
+        {
+            StartCoroutine(StartTVAnimation());
+        }
 
+        public void AllowInteract()
+            => IsInteractable = true;
+        
         private IEnumerator StartTVAnimation()
         {
             _videoPlayer.clip = _whiteNoiseClip;
@@ -48,6 +57,7 @@ namespace CodeBase.Environment
             _videoPlayer.clip = _whiteNoiseClip;
             _videoPlayer.Play();
             _soundPlayer.Play();
+            _console.AllowInteract();
         }
     }
 }

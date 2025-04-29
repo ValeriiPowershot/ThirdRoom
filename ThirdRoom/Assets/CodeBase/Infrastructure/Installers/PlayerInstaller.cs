@@ -17,5 +17,4 @@ namespace CodeBase.Infrastructure.Installers
             Container.Bind<PlayerPrefab>().FromInstance(_playerPrefab).AsSingle().NonLazy();
         }
     }
-
 }

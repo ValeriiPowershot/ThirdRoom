@@ -1,5 +1,6 @@
 using FMODUnity;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 namespace CodeBase.Audio
@@ -8,7 +9,13 @@ namespace CodeBase.Audio
     public class Whisper : MonoBehaviour
     {
         [SerializeField] private EventReference _whisperEvent;
+        
+        private FMODAudioPlayer _audioPlayer;
 
+        [Inject]
+        public void Construct(FMODAudioPlayer audioPlayer)
+            => _audioPlayer = audioPlayer;    
+        
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.F))
@@ -18,7 +25,7 @@ namespace CodeBase.Audio
         public void Play()
         {
             Vector3 randomPosition = Random.insideUnitSphere;
-            FMODAudioManager.Instance.PlayOneShot(_whisperEvent, randomPosition);
+            _audioPlayer.PlayOneShot(_whisperEvent, randomPosition);
         }
     }
 }

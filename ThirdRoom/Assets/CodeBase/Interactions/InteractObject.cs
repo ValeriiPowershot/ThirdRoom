@@ -9,7 +9,7 @@ namespace CodeBase.Interactions
     {
         public event Action OnInteracted;
         public event Action OnLostFocus;
-        public bool IsInteractable { get; protected set; } = true;
+        [field: SerializeField] public bool IsInteractable { get; protected set; } = true;
         public string Description => _description;
         
         [SerializeField] private string _description;

@@ -1,13 +1,15 @@
-﻿using ECM2.Examples.FirstPerson;
+﻿using CodeBase.Interactions;
+using ECM2.Examples.FirstPerson;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace CodeBase
 {
     public class PlayerPrefab : MonoBehaviour
     {
-        [SerializeField] private FirstPersonCharacterLookInput _firstPersonCharacterLookInput;
-        [SerializeField] private FirstPersonCharacterInput _firstPersonCharacterInput;
+        [field: SerializeField] public Interactor Interactor { get; private set; }
+        [field: SerializeField] public FirstPersonCharacter FirstPersonCharacter { get; private set; }
+        [field: SerializeField] public FirstPersonCharacterLookInput _firstPersonCharacterLookInput;
+        [field: SerializeField] public FirstPersonCharacterInput _firstPersonCharacterInput;
 
         public void BlockInput()
         {

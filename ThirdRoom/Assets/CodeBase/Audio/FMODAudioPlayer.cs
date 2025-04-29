@@ -5,32 +5,8 @@ using UnityEngine;
 namespace CodeBase.Audio
 {
     [DisallowMultipleComponent]
-    public class FMODAudioManager : MonoBehaviour
+    public class FMODAudioPlayer : MonoBehaviour
     {
-        public static FMODAudioManager Instance { get; private set; }
-
-        private void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-
-            RuntimeManager.LoadBank("Master");
-            RuntimeManager.LoadBank("Master.strings");
-        }
-
-        private void OnDestroy()
-        {
-            if (Instance == this)
-            {
-                Instance = null;
-            }
-        }
-
         public void PlayOneShot(EventReference eventReference, Vector3 position)
         {
             if (eventReference.IsNull)
