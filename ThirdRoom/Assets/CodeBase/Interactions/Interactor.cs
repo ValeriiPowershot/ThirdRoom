@@ -1,6 +1,8 @@
 using System;
+using CodeBase.Controls;
 using Codebase.Logic.Interactions;
 using UnityEngine;
+using Zenject;
 
 namespace CodeBase.Interactions
 {
@@ -17,6 +19,11 @@ namespace CodeBase.Interactions
         private RaycastHit _raycastHit;
         private InteractObject _interactObject;
         private Camera _camera;
+        private IInputService _inputService;
+
+        [Inject]
+        private void Construct(IInputService inputService)
+            => _inputService = inputService;
         
         private void Start() => _camera = Camera.main;
 
@@ -24,7 +31,7 @@ namespace CodeBase.Interactions
         {
             if (!_interactionEnabled) return;
             
-            if (Input.GetKeyDown(KeyCode.E))
+            if (_inputService.IsInteractPressed)
                 TryInteract();
                 
             Ray ray = _camera.ScreenPointToRay(Input.mousePosition);

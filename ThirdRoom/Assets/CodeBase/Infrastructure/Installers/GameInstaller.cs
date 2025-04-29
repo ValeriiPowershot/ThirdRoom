@@ -1,5 +1,5 @@
 ﻿using CodeBase.Audio;
-using CodeBase.Interactions;
+using CodeBase.Controls;
 using UnityEngine;
 using Zenject;
 
@@ -11,9 +11,13 @@ namespace CodeBase.Infrastructure.Installers
         
         public override void InstallBindings()
         {
+            InputSystemInstall();
             AudioPlayerInstall();
         }
 
+        private void InputSystemInstall()
+            => Container.Bind<IInputService>().To<InputService>().AsSingle().NonLazy();
+        
         private void AudioPlayerInstall()
             => Container.Bind<FMODAudioPlayer>().FromComponentInNewPrefab(_fmodAudioPlayer)
                 .WithGameObjectName("Audio Player").AsSingle().NonLazy();
