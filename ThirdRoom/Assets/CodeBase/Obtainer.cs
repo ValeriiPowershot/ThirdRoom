@@ -17,7 +17,6 @@ namespace CodeBase
 
         [Header("Components")]
         [SerializeField] private ObtainerUI _obtainerUI;
-        [SerializeField] private ObjectRotation _objectRotation;
         [SerializeField] private bool _isScalingObject;
         [SerializeField] private bool _isDeductiveObject;
         [SerializeField] private bool _isRotatingObject;
@@ -33,10 +32,9 @@ namespace CodeBase
         [Header("Full Description")]
         [SerializeField] private bool _hasFullDescription;
         [SerializeField] private string _title;
-        
         [TextArea(3, 10)]
-        [SerializeField] private string _description;
-        
+        [SerializeField] private string _fullDescription;
+
         public Vector3 StartPosition { get; set; }
         public Vector3 StartRotation { get; set; }
 
@@ -44,16 +42,18 @@ namespace CodeBase
 
         private PlayerPrefab _playerPrefab;
         private InventoryController _inventoryController;
+        private ObjectRotation _objectRotation;
 
         private bool _isInspecting;
         private Item _currentItem;
         private string _currentItemPath;
 
         [Inject]
-        public void Construct(PlayerPrefab playerPrefab, InventoryController inventoryController)
+        public void Construct(PlayerPrefab playerPrefab, InventoryController inventoryController, ObjectRotation objectRotation)
         {
             _playerPrefab = playerPrefab;
             _inventoryController = inventoryController;
+            _objectRotation = objectRotation;
         }
 
         private void OnValidate()
@@ -81,16 +81,34 @@ namespace CodeBase
 
         private void Update()
         {
-            if (_isInspecting && Input.GetKeyDown(KeyCode.E))
+            if (!_isInspecting) return;
+
+            if (Input.GetKeyDown(KeyCode.Space) && !_obtainerUI.IsFullDescriptionVisible)
             {
                 ConfirmObtain();
             }
-            if (_isInspecting && Input.GetKeyDown(KeyCode.KeypadEnter))
+
+            if (Input.GetKeyDown(KeyCode.Return) && _hasFullDescription && !_obtainerUI.IsFullDescriptionVisible)
             {
-                ShowFullDescription();
+                _obtainerUI.ToggleFullDescriptionCanvas(true, _title, _fullDescription);
+                _objectRotation.CanEscapeInput = false;
+                _obtainerUI.ToggleMainCanvas(false);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (_obtainerUI.IsFullDescriptionVisible)
+                {
+                    _obtainerUI.ToggleFullDescriptionCanvas(false);
+                    _obtainerUI.ToggleMainCanvas(true);
+                    _objectRotation.CanEscapeInput = true;
+                }
+                else
+                {
+                    CancelInspecting();
+                }
             }
         }
-        
 
         protected override void OnInteract()
         {
@@ -101,17 +119,14 @@ namespace CodeBase
         {
             _objectRotation.Activate(transform, _isScalingObject, MoveToCameraPlan);
             _playerPrefab.BlockInput();
+            _objectRotation.CanEscapeInput = true;
             RotateToCamera();
 
-            if (_isStick)
+            _currentItemPath = _isStick ? "InventoryObjects/Stick" :
+                               _isLetter ? "InventoryObjects/Letter" : string.Empty;
+
+            if (!string.IsNullOrEmpty(_currentItemPath))
             {
-                _currentItemPath = "InventoryObjects/Stick";
-                _currentItem = LoadItem(_currentItemPath);
-                _obtainerUI.Display(transform, _currentItem);
-            }
-            else if (_isLetter)
-            {
-                _currentItemPath = "InventoryObjects/Letter";
                 _currentItem = LoadItem(_currentItemPath);
                 _obtainerUI.Display(transform, _currentItem);
             }
@@ -119,19 +134,25 @@ namespace CodeBase
             _isInspecting = true;
         }
 
-        private void ShowFullDescription()
-        {
-            
-        }
-        
         private void ConfirmObtain()
         {
             if (_currentItem == null) return;
 
             _inventoryController.AddItem(_currentItem);
+            Debug.Log($"{_currentItem.name} added to inventory.");
+            _obtainerUI.ToggleMainCanvas(false);
             _isInspecting = false;
             _playerPrefab.UnblockInput();
-            Debug.Log($"{_currentItem.name} added to inventory.");
+            _objectRotation.SelectedObject = null;
+            Destroy(gameObject);
+        }
+
+        private void CancelInspecting()
+        {
+            _obtainerUI.ToggleMainCanvas(false);
+            _objectRotation.Deactivate();
+            _playerPrefab.UnblockInput();
+            _isInspecting = false;
         }
 
         private void MoveToCameraPlan()
@@ -165,9 +186,7 @@ namespace CodeBase
                   .OnComplete(() => Destroy(target.gameObject));
 
             if (_isDeductiveObject)
-            {
                 OnDeductiveObjectClaimed?.Invoke();
-            }
         }
 
         private void OnDestroyRequested()

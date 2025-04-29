@@ -15,12 +15,14 @@ namespace CodeBase
         {
             _firstPersonCharacterInput.ToggleInput(false);
             _firstPersonCharacterLookInput.ToggleMouseInput(false);
+            Debug.Log("BlockInput");
         }
 
         public void UnblockInput()
         {
             _firstPersonCharacterInput.ToggleInput(true);
             _firstPersonCharacterLookInput.ToggleMouseInput(true);
+            Debug.Log("UnblockInput");
         }
 
         public void LockCursor()

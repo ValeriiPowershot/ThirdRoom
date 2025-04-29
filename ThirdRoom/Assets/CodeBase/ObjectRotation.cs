@@ -19,6 +19,8 @@ namespace CodeBase
         [SerializeField] private Transform _pocketPoint;
 
         public Transform SelectedObject { get; set; }
+
+        public bool CanEscapeInput;
         
         private Transform _selectedDisposePosition;
 
@@ -67,6 +69,9 @@ namespace CodeBase
         
         private void HandleEscapeInput()
         {
+            if(!CanEscapeInput)
+                return;
+            
             if (!Input.GetKeyDown(KeyCode.Escape))
                 return;
 

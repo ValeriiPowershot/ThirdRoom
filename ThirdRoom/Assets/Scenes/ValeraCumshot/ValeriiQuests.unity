@@ -1147,7 +1147,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 491359753}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -1603,7 +1603,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Key
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1865,6 +1865,7 @@ MonoBehaviour:
   _isActivate: 0
   _isScalingObject: 0
   _pocketPoint: {fileID: 130664931}
+  CanEscapeInput: 0
 --- !u!114 &607074397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1963,7 +1964,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 648308562}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -2160,9 +2161,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 986a5635b7b9045cbafe55c78c50de2f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: af01d386c8f9641a4980c3b5307f160c, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -2350,7 +2351,6 @@ MonoBehaviour:
   _description: 
   _disableAfterInteraction: 0
   _obtainerUI: {fileID: 2042958656}
-  _objectRotation: {fileID: 607074396}
   _isScalingObject: 0
   _isDeductiveObject: 0
   _isRotatingObject: 0
@@ -2359,7 +2359,7 @@ MonoBehaviour:
   _returnSpeed: 1
   _hasFullDescription: 0
   _title: 
-  _description: 
+  _fullDescription: 
 --- !u!65 &819747224
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2677,7 +2677,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &901341959
 RectTransform:
@@ -3793,7 +3793,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Key
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3927,16 +3927,15 @@ MonoBehaviour:
   _description: 
   _disableAfterInteraction: 0
   _obtainerUI: {fileID: 2042958656}
-  _objectRotation: {fileID: 607074396}
   _isScalingObject: 0
   _isDeductiveObject: 0
   _isRotatingObject: 0
   _isLetter: 1
   _isStick: 0
   _returnSpeed: 1
-  _hasFullDescription: 0
-  _title: 
-  _description: 
+  _hasFullDescription: 1
+  _title: Hello
+  _fullDescription: To MUUUUCH
 --- !u!65 &1646297116
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4226,7 +4225,6 @@ MonoBehaviour:
   _description: 
   _disableAfterInteraction: 0
   _obtainerUI: {fileID: 2042958656}
-  _objectRotation: {fileID: 607074396}
   _isScalingObject: 0
   _isDeductiveObject: 0
   _isRotatingObject: 0
@@ -4235,7 +4233,7 @@ MonoBehaviour:
   _returnSpeed: 1
   _hasFullDescription: 0
   _title: 
-  _description: 
+  _fullDescription: 
 --- !u!65 &1746522512
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4989,7 +4987,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _obtainedNotificationUI: {fileID: 2042958661}
   _mainCanvasGroup: {fileID: 648308566}
-  _backgroundCanvasGroup: {fileID: 1429189421}
   _headerCanvasGroup: {fileID: 1034523157}
   _hintsCanvasGroup: {fileID: 1437308754}
   _fullDescriptionCanvasGroup: {fileID: 491359757}
@@ -5002,7 +4999,6 @@ MonoBehaviour:
   _notificationItem: 
   _alphaFadeDuration: 0.25
   _delayBeforePrintingCharacter: 0.25
-  _blinkDuration: 0.55
   _shouldMoveToStash: 0
   _shouldDestroy: 0
   _shouldDisplayNotification: 0
@@ -5127,6 +5123,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inventoryView: {fileID: 901341960}
   _inventoryController: {fileID: 607074397}
+--- !u!114 &2046197064 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3658742063025064605, guid: 28c0531195f591349a919292cdc94daf, type: 3}
+  m_PrefabInstance: {fileID: 7183731935046463947}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2046197059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385e117de89328343adc970a972a6bb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1870213074523299539
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5251,16 +5258,24 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3144362817926571715, guid: 28c0531195f591349a919292cdc94daf, type: 3}
       propertyPath: _monoInstallers.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3144362817926571715, guid: 28c0531195f591349a919292cdc94daf, type: 3}
       propertyPath: '_monoInstallers.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2046197064}
+    - target: {fileID: 3144362817926571715, guid: 28c0531195f591349a919292cdc94daf, type: 3}
+      propertyPath: '_monoInstallers.Array.data[2]'
       value: 
       objectReference: {fileID: 2046197063}
     - target: {fileID: 3658742063025064605, guid: 28c0531195f591349a919292cdc94daf, type: 3}
       propertyPath: _playerPrefab
       value: 
       objectReference: {fileID: 607074386}
+    - target: {fileID: 3658742063025064605, guid: 28c0531195f591349a919292cdc94daf, type: 3}
+      propertyPath: _objectRotation
+      value: 
+      objectReference: {fileID: 607074396}
     - target: {fileID: 4112207848268190841, guid: 28c0531195f591349a919292cdc94daf, type: 3}
       propertyPath: m_Name
       value: SceneContextPlayerInstaller
