@@ -43,16 +43,19 @@ namespace CodeBase
             HandleMouseInput();
         }
 
-        public void Activate(Transform selectedObject, bool isScaling, Action onMoved = null)
+        public void Activate(Transform selectedObject, bool isScaling, Transform parentObject = null, Action onMoved = null)
         {
             _isActivate = true;
             SelectedObject = selectedObject;
-            if (isScaling)
-            {
+            
+            if (isScaling) 
                 SelectedObject.DOScale(_selectedObjectScale, _selectedObjectScaleDuration);
-            }
 
-            SelectedObject.SetParent(_pocketPoint);
+            if (parentObject == null) 
+                SelectedObject.SetParent(_pocketPoint);
+            else
+                selectedObject.SetParent(parentObject);
+
             SelectedObject.DOLocalMove(Vector3.zero, 1f).OnComplete(() =>
             {
                 _isActivate = true;

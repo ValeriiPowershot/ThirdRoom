@@ -178,6 +178,54 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Inventory"",
+            ""id"": ""1f03d31e-7b81-4f05-8542-4ccb5a6e1cf3"",
+            ""actions"": [
+                {
+                    ""name"": ""NextItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""34348a0b-f330-4f97-8680-03ac4eb8b557"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PreviousItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""fa163ad4-750a-4726-81e7-0508f873a0e9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""6d1a5850-949b-4cab-b336-09da7ff058c3"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0940b517-ed40-49e8-b69a-aafc61fa8046"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PreviousItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -193,12 +241,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_ObtainerUI_Reading = m_ObtainerUI.FindAction("Reading", throwIfNotFound: true);
         m_ObtainerUI_Take = m_ObtainerUI.FindAction("Take", throwIfNotFound: true);
         m_ObtainerUI_Escape = m_ObtainerUI.FindAction("Escape", throwIfNotFound: true);
+        // Inventory
+        m_Inventory = asset.FindActionMap("Inventory", throwIfNotFound: true);
+        m_Inventory_NextItem = m_Inventory.FindAction("NextItem", throwIfNotFound: true);
+        m_Inventory_PreviousItem = m_Inventory.FindAction("PreviousItem", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerInputActions.Player.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_ObtainerUI.enabled, "This will cause a leak and performance issues, PlayerInputActions.ObtainerUI.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Inventory.enabled, "This will cause a leak and performance issues, PlayerInputActions.Inventory.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -388,6 +441,60 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public ObtainerUIActions @ObtainerUI => new ObtainerUIActions(this);
+
+    // Inventory
+    private readonly InputActionMap m_Inventory;
+    private List<IInventoryActions> m_InventoryActionsCallbackInterfaces = new List<IInventoryActions>();
+    private readonly InputAction m_Inventory_NextItem;
+    private readonly InputAction m_Inventory_PreviousItem;
+    public struct InventoryActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public InventoryActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @NextItem => m_Wrapper.m_Inventory_NextItem;
+        public InputAction @PreviousItem => m_Wrapper.m_Inventory_PreviousItem;
+        public InputActionMap Get() { return m_Wrapper.m_Inventory; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InventoryActions set) { return set.Get(); }
+        public void AddCallbacks(IInventoryActions instance)
+        {
+            if (instance == null || m_Wrapper.m_InventoryActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_InventoryActionsCallbackInterfaces.Add(instance);
+            @NextItem.started += instance.OnNextItem;
+            @NextItem.performed += instance.OnNextItem;
+            @NextItem.canceled += instance.OnNextItem;
+            @PreviousItem.started += instance.OnPreviousItem;
+            @PreviousItem.performed += instance.OnPreviousItem;
+            @PreviousItem.canceled += instance.OnPreviousItem;
+        }
+
+        private void UnregisterCallbacks(IInventoryActions instance)
+        {
+            @NextItem.started -= instance.OnNextItem;
+            @NextItem.performed -= instance.OnNextItem;
+            @NextItem.canceled -= instance.OnNextItem;
+            @PreviousItem.started -= instance.OnPreviousItem;
+            @PreviousItem.performed -= instance.OnPreviousItem;
+            @PreviousItem.canceled -= instance.OnPreviousItem;
+        }
+
+        public void RemoveCallbacks(IInventoryActions instance)
+        {
+            if (m_Wrapper.m_InventoryActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IInventoryActions instance)
+        {
+            foreach (var item in m_Wrapper.m_InventoryActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_InventoryActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public InventoryActions @Inventory => new InventoryActions(this);
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -400,5 +507,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnReading(InputAction.CallbackContext context);
         void OnTake(InputAction.CallbackContext context);
         void OnEscape(InputAction.CallbackContext context);
+    }
+    public interface IInventoryActions
+    {
+        void OnNextItem(InputAction.CallbackContext context);
+        void OnPreviousItem(InputAction.CallbackContext context);
     }
 }

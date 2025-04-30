@@ -1,4 +1,5 @@
-﻿using CodeBase.Data;
+﻿using CodeBase.Controls;
+using CodeBase.Data;
 using CodeBase.Inventory.Model;
 using CodeBase.Inventory.View;
 using UnityEngine;
@@ -11,12 +12,14 @@ namespace CodeBase.Inventory.Controller
         [SerializeField] private InventoryView _view;
         private InventoryModel _model;
         private PlayerPrefab _playerPrefab;
+        private IInputService _inputService;
 
         [Inject]
-        public void Construct(PlayerPrefab playerPrefab)
+        public void Construct(PlayerPrefab playerPrefab, IInputService inputService)
         {
             _playerPrefab = playerPrefab;
             _model = new InventoryModel();
+            _inputService = inputService;
         }
 
         private void Start()
@@ -28,10 +31,9 @@ namespace CodeBase.Inventory.Controller
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                ToggleInventory();
-            }
+            if (Input.GetKeyDown(KeyCode.Tab)) ToggleInventory();
+            if (_inputService.IsNextButtonPressed) OnNextItem();
+            if (_inputService.IsPreviousButtonPressed) OnPrevItem();
         }
 
         private void ToggleInventory()
@@ -41,9 +43,11 @@ namespace CodeBase.Inventory.Controller
                 _view.HideInventory();
                 _playerPrefab.UnlockCursor();
                 _playerPrefab.UnblockInput();
+                _inputService.DisableActionMap(ActionMaps.Inventory);
             }
             else
             {
+                _inputService.EnableActionMap(ActionMaps.Inventory);
                 _view.ShowInventory();
                 _playerPrefab.LockCursor();
                 _playerPrefab.BlockInput();

@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace CodeBase.Inventory.View
 {
@@ -15,7 +16,14 @@ namespace CodeBase.Inventory.View
         public Button PrevButton;
 
         private GameObject _currentItemDisplay;
+        private ObjectRotation _objectRotation;
 
+        [Inject]
+        public void Construct(ObjectRotation objectRotation)
+        {
+            _objectRotation = objectRotation;
+        }
+        
         public void ShowInventory()
         {
             InventoryPanel.SetActive(true);
@@ -40,6 +48,7 @@ namespace CodeBase.Inventory.View
             if (item.Item3DModel != null)
             {
                 _currentItemDisplay = Instantiate(item.Item3DModel, ItemDisplayParent);
+                _objectRotation.Activate(_currentItemDisplay.transform, false, ItemDisplayParent);
             }
         }
 

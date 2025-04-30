@@ -38,7 +38,7 @@ public static class SceneSwitcherToolbar
 
     static void AddToolbarUI()
     {
-        var toolbarType = typeof(Editor).Assembly.GetType("UnityEditor.Toolbar");
+        var toolbarType = typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.Toolbar");
         if (toolbarType == null) return;
 
         var toolbars = Resources.FindObjectsOfTypeAll(toolbarType);

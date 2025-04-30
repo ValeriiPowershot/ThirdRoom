@@ -122,7 +122,7 @@ namespace CodeBase
         {
             _inputService.DisableActionMap(ActionMaps.Player);
             _inputService.EnableActionMap(ActionMaps.ObtainerUI);
-            _objectRotation.Activate(transform, _isScalingObject, MoveToCameraPlan);
+            _objectRotation.Activate(transform, _isScalingObject,null, MoveToCameraPlan);
             _playerPrefab.BlockInput();
             _objectRotation.CanEscapeInput = true;
             RotateToCamera();
@@ -143,6 +143,8 @@ namespace CodeBase
         {
             if (_currentItem == null) return;
 
+            _inputService.DisableActionMap(ActionMaps.ObtainerUI);
+            _inputService.EnableActionMap(ActionMaps.Player);
             _inventoryController.AddItem(_currentItem);
             Debug.Log($"{_currentItem.name} added to inventory.");
             _obtainerUI.ToggleMainCanvas(false);

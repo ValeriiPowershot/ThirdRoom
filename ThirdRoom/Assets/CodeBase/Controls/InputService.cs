@@ -21,6 +21,8 @@ namespace CodeBase.Controls
         public bool IsObtainerReadPressed => _inputActions.ObtainerUI.Reading.WasPressedThisFrame();
         public bool IsObtainerTakePressed => _inputActions.ObtainerUI.Take.WasPressedThisFrame();
         public bool IsObtainerEscapePressed => _inputActions.ObtainerUI.Escape.WasPressedThisFrame();
+        public bool IsNextButtonPressed => _inputActions.Inventory.NextItem.WasPressedThisFrame();
+        public bool IsPreviousButtonPressed => _inputActions.Inventory.PreviousItem.WasPressedThisFrame();
 
         public void EnableActionMap(string actionMapName)
         {

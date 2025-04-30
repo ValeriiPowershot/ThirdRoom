@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Stick
   m_EditorClassIdentifier: 
   ItemName: Stick
-  Item3DModel: {fileID: 2847195621957768282, guid: c5244fc6e442d8942a642f3b84072379, type: 3}
+  Item3DModel: {fileID: 2847195621957768282, guid: 47b26c21eac4cd64f8917f9790b7189b, type: 3}
   ItemDescription: Super Palka
   Index: 2

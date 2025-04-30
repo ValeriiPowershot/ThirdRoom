@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Letter
   m_EditorClassIdentifier: 
   ItemName: Note
-  Item3DModel: {fileID: 2847195621957768282, guid: 17c65a569332f464b923962c3128e239, type: 3}
+  Item3DModel: {fileID: 2847195621957768282, guid: f2f7b7ac41db55c45a86bf3c8fa0ca9e, type: 3}
   ItemDescription: Zalupa
   Index: 1
