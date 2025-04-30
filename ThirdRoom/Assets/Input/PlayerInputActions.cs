@@ -110,6 +110,74 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""ObtainerUI"",
+            ""id"": ""d66f2acf-fc2f-47b0-804c-291515ff7f47"",
+            ""actions"": [
+                {
+                    ""name"": ""Reading"",
+                    ""type"": ""Button"",
+                    ""id"": ""54d13f55-e1d1-41c4-96b5-7b741cf84888"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Take"",
+                    ""type"": ""Button"",
+                    ""id"": ""e305349a-9398-426b-9010-ed4994ba6054"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Escape"",
+                    ""type"": ""Button"",
+                    ""id"": ""b06300d7-8fd8-4c44-aa1b-5d95dbcbc4ae"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""d3c9d14f-9632-46e3-9866-3c4a4acc2508"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reading"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f77cf896-8727-471e-b84d-a037def7398c"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Take"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e6f29ecb-435b-4027-a888-3fe9fe8c9be0"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -120,11 +188,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        // ObtainerUI
+        m_ObtainerUI = asset.FindActionMap("ObtainerUI", throwIfNotFound: true);
+        m_ObtainerUI_Reading = m_ObtainerUI.FindAction("Reading", throwIfNotFound: true);
+        m_ObtainerUI_Take = m_ObtainerUI.FindAction("Take", throwIfNotFound: true);
+        m_ObtainerUI_Escape = m_ObtainerUI.FindAction("Escape", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerInputActions.Player.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_ObtainerUI.enabled, "This will cause a leak and performance issues, PlayerInputActions.ObtainerUI.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -252,11 +326,79 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // ObtainerUI
+    private readonly InputActionMap m_ObtainerUI;
+    private List<IObtainerUIActions> m_ObtainerUIActionsCallbackInterfaces = new List<IObtainerUIActions>();
+    private readonly InputAction m_ObtainerUI_Reading;
+    private readonly InputAction m_ObtainerUI_Take;
+    private readonly InputAction m_ObtainerUI_Escape;
+    public struct ObtainerUIActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public ObtainerUIActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Reading => m_Wrapper.m_ObtainerUI_Reading;
+        public InputAction @Take => m_Wrapper.m_ObtainerUI_Take;
+        public InputAction @Escape => m_Wrapper.m_ObtainerUI_Escape;
+        public InputActionMap Get() { return m_Wrapper.m_ObtainerUI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(ObtainerUIActions set) { return set.Get(); }
+        public void AddCallbacks(IObtainerUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_ObtainerUIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_ObtainerUIActionsCallbackInterfaces.Add(instance);
+            @Reading.started += instance.OnReading;
+            @Reading.performed += instance.OnReading;
+            @Reading.canceled += instance.OnReading;
+            @Take.started += instance.OnTake;
+            @Take.performed += instance.OnTake;
+            @Take.canceled += instance.OnTake;
+            @Escape.started += instance.OnEscape;
+            @Escape.performed += instance.OnEscape;
+            @Escape.canceled += instance.OnEscape;
+        }
+
+        private void UnregisterCallbacks(IObtainerUIActions instance)
+        {
+            @Reading.started -= instance.OnReading;
+            @Reading.performed -= instance.OnReading;
+            @Reading.canceled -= instance.OnReading;
+            @Take.started -= instance.OnTake;
+            @Take.performed -= instance.OnTake;
+            @Take.canceled -= instance.OnTake;
+            @Escape.started -= instance.OnEscape;
+            @Escape.performed -= instance.OnEscape;
+            @Escape.canceled -= instance.OnEscape;
+        }
+
+        public void RemoveCallbacks(IObtainerUIActions instance)
+        {
+            if (m_Wrapper.m_ObtainerUIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IObtainerUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_ObtainerUIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_ObtainerUIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public ObtainerUIActions @ObtainerUI => new ObtainerUIActions(this);
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+    }
+    public interface IObtainerUIActions
+    {
+        void OnReading(InputAction.CallbackContext context);
+        void OnTake(InputAction.CallbackContext context);
+        void OnEscape(InputAction.CallbackContext context);
     }
 }

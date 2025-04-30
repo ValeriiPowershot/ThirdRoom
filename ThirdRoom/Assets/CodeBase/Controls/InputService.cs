@@ -18,7 +18,10 @@ namespace CodeBase.Controls
         public bool IsJumpPressed => _inputActions.Player.Jump.WasPressedThisFrame();
         public bool IsFirePressed => _inputActions.Player.Fire.WasPressedThisFrame();
         public bool IsInteractPressed => _inputActions.Player.Interact.WasPressedThisFrame();
-        
+        public bool IsObtainerReadPressed => _inputActions.ObtainerUI.Reading.WasPressedThisFrame();
+        public bool IsObtainerTakePressed => _inputActions.ObtainerUI.Take.WasPressedThisFrame();
+        public bool IsObtainerEscapePressed => _inputActions.ObtainerUI.Escape.WasPressedThisFrame();
+
         public void EnableActionMap(string actionMapName)
         {
             InputActionMap actionMap = GetActionMap(actionMapName);

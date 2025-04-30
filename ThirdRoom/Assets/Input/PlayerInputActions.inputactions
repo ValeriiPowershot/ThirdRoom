@@ -88,6 +88,74 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "ObtainerUI",
+            "id": "d66f2acf-fc2f-47b0-804c-291515ff7f47",
+            "actions": [
+                {
+                    "name": "Reading",
+                    "type": "Button",
+                    "id": "54d13f55-e1d1-41c4-96b5-7b741cf84888",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Take",
+                    "type": "Button",
+                    "id": "e305349a-9398-426b-9010-ed4994ba6054",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Escape",
+                    "type": "Button",
+                    "id": "b06300d7-8fd8-4c44-aa1b-5d95dbcbc4ae",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d3c9d14f-9632-46e3-9866-3c4a4acc2508",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reading",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f77cf896-8727-471e-b84d-a037def7398c",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Take",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e6f29ecb-435b-4027-a888-3fe9fe8c9be0",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

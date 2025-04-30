@@ -1,4 +1,5 @@
 using System;
+using CodeBase.Controls;
 using CodeBase.Data;
 using CodeBase.Interactions;
 using CodeBase.Inventory;
@@ -43,17 +44,19 @@ namespace CodeBase
         private PlayerPrefab _playerPrefab;
         private InventoryController _inventoryController;
         private ObjectRotation _objectRotation;
+        private IInputService _inputService;
 
         private bool _isInspecting;
         private Item _currentItem;
         private string _currentItemPath;
 
         [Inject]
-        public void Construct(PlayerPrefab playerPrefab, InventoryController inventoryController, ObjectRotation objectRotation)
+        public void Construct(PlayerPrefab playerPrefab, InventoryController inventoryController, ObjectRotation objectRotation, IInputService inputService)
         {
             _playerPrefab = playerPrefab;
             _inventoryController = inventoryController;
             _objectRotation = objectRotation;
+            _inputService = inputService;
         }
 
         private void OnValidate()
@@ -83,19 +86,19 @@ namespace CodeBase
         {
             if (!_isInspecting) return;
 
-            if (Input.GetKeyDown(KeyCode.Space) && !_obtainerUI.IsFullDescriptionVisible)
+            if (_inputService.IsObtainerTakePressed && !_obtainerUI.IsFullDescriptionVisible)
             {
                 ConfirmObtain();
             }
 
-            if (Input.GetKeyDown(KeyCode.Return) && _hasFullDescription && !_obtainerUI.IsFullDescriptionVisible)
+            if (_inputService.IsObtainerReadPressed && _hasFullDescription && !_obtainerUI.IsFullDescriptionVisible)
             {
                 _obtainerUI.ToggleFullDescriptionCanvas(true, _title, _fullDescription);
                 _objectRotation.CanEscapeInput = false;
                 _obtainerUI.ToggleMainCanvas(false);
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (_inputService.IsObtainerEscapePressed)
             {
                 if (_obtainerUI.IsFullDescriptionVisible)
                 {
@@ -117,6 +120,8 @@ namespace CodeBase
 
         private void Obtain()
         {
+            _inputService.DisableActionMap(ActionMaps.Player);
+            _inputService.EnableActionMap(ActionMaps.ObtainerUI);
             _objectRotation.Activate(transform, _isScalingObject, MoveToCameraPlan);
             _playerPrefab.BlockInput();
             _objectRotation.CanEscapeInput = true;
@@ -149,6 +154,8 @@ namespace CodeBase
 
         private void CancelInspecting()
         {
+            _inputService.DisableActionMap(ActionMaps.ObtainerUI);
+            _inputService.EnableActionMap(ActionMaps.Player);
             _obtainerUI.ToggleMainCanvas(false);
             _objectRotation.Deactivate();
             _playerPrefab.UnblockInput();
