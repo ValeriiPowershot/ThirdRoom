@@ -15,6 +15,7 @@ namespace CodeBase
         {
             _firstPersonCharacterInput.ToggleInput(false);
             _firstPersonCharacterLookInput.ToggleMouseInput(false);
+            _firstPersonCharacterInput.Character.SetMovementDirection(Vector3.zero);
             Debug.Log("BlockInput");
         }
 

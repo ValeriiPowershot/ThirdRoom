@@ -17,13 +17,30 @@ namespace CodeBase.Interactions.InteractObjects
 		public Action OnRequiredColorSelected;
 		public Action OnNonRequiredColorSelected;
 		
+		private Vector3 _startPosition;
+		private Vector3 _startRotation;
+		private bool _activated;
+
 		private void Start()
 		{
 			Deactivate();
+			_startPosition = transform.position;
+			_startRotation = transform.eulerAngles;
+		}
+
+		private void Update()
+		{
+			if (Input.GetKeyDown(KeyCode.Escape) && _activated)
+			{
+				Debug.Log("d");
+				DragToStartPosition();
+				_activated = false;
+			}
 		}
 
 		protected override void OnInteract()
 		{
+			_activated = true;
 			DragToCenter();
 			_firstPersonCharacterInput.ToggleInput(false);
 			_firstPersonCharacterLookInput.ToggleMouseInput(false);
@@ -41,6 +58,12 @@ namespace CodeBase.Interactions.InteractObjects
 					RotateToCenter();
 					Activate();
 				});
+		}
+
+		private void DragToStartPosition()
+		{
+			transform.DOMove(_startPosition, _speed).OnComplete(()=> Deactivate());
+			transform.DORotate(_startRotation, _speed);
 		}
 
 		[ContextMenu("Return")]
@@ -84,6 +107,10 @@ namespace CodeBase.Interactions.InteractObjects
 			{
 				lightButton.Button.interactable = false;
 			}
+			_firstPersonCharacterLookInput.ToggleMouseCursor(false);
+			
+			_firstPersonCharacterInput.ToggleInput(true);
+			_firstPersonCharacterLookInput.ToggleMouseInput(true);
 		}
 	}
 }

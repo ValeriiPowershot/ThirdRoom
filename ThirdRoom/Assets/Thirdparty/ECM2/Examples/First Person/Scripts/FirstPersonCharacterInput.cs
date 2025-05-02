@@ -8,6 +8,8 @@ namespace ECM2.Examples.FirstPerson
     
     public class FirstPersonCharacterInput : MonoBehaviour
     {
+        public Character Character => _character;
+        
         private Character _character;
 
         [SerializeField] private bool _enabled = true;
