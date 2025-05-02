@@ -13,7 +13,7 @@ namespace CodeBase.Interactions.InteractObjects
 		[SerializeField] private FirstPersonCharacterInput _firstPersonCharacterInput;
 		[SerializeField] private FirstPersonCharacterLookInput _firstPersonCharacterLookInput;
 		[SerializeField] private float _speed;
-		[SerializeField] private Color _requiredColor;
+		[SerializeField] private LightColorType _requiredColor;
 		public Action OnRequiredColorSelected;
 		public Action OnNonRequiredColorSelected;
 		
@@ -46,7 +46,12 @@ namespace CodeBase.Interactions.InteractObjects
 		[ContextMenu("Return")]
 		private void RotateToCenter()
 		{
-			transform.DOLookAt(Camera.main.transform.position, _speed);
+			Vector3 targetPosition = Camera.main.transform.position;
+			Quaternion targetRotation = Quaternion.LookRotation(targetPosition - transform.position);
+			Quaternion offsetRotation = Quaternion.Euler(270, 0, 180); // Изменено смещение
+			Quaternion finalRotation = targetRotation * offsetRotation;
+
+			transform.DORotateQuaternion(finalRotation, _speed);
 		}
 
 		private void Activate()
@@ -59,14 +64,16 @@ namespace CodeBase.Interactions.InteractObjects
 			_firstPersonCharacterLookInput.ToggleMouseCursor(true);
 		}
 
-		private void OnLightColorChanged(Color color)
+		private void OnLightColorChanged(LightColorType lightColorType)
 		{
-			if (_requiredColor == color)
+			if (_requiredColor == lightColorType)
 			{
+				print("Required color selected");
 				OnRequiredColorSelected?.Invoke();
 			}
 			else
 			{
+				print("Non-required color selected");
 				OnNonRequiredColorSelected?.Invoke();
 			}
 		}

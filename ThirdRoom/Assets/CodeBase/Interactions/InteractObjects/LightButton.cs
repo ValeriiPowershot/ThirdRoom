@@ -10,7 +10,8 @@ namespace CodeBase.Interactions.InteractObjects
 		[field: SerializeField] public Button Button { get; private set; }
 		[SerializeField] private Light _light;
 		[SerializeField] private Color _lightColor;
-		public Action<Color> OnLightColorChanged;
+		[SerializeField] private LightColorType _lightColorType;
+		public Action<LightColorType> OnLightColorChanged;
 
 		private void OnValidate()
 		{
@@ -25,13 +26,10 @@ namespace CodeBase.Interactions.InteractObjects
 		private void OnClick()
 		{
 			print(gameObject.name);
-
-			if (_light.color == _lightColor)
-				return;
-
+			
 			_light.color = _lightColor;
 			_light.enabled = true;
-			OnLightColorChanged?.Invoke(_light.color);
+			OnLightColorChanged?.Invoke(_lightColorType);
 		}
 
 		public void OnPointerEnter(PointerEventData eventData)
