@@ -16,7 +16,6 @@ namespace CodeBase
         [SerializeField] private float _rotationSpeed = 10f;
         [SerializeField] private bool _isActivate;
         [SerializeField] private bool _isScalingObject;
-        [SerializeField] private Transform _pocketPoint;
 
         public Transform SelectedObject { get; set; }
 
@@ -52,7 +51,7 @@ namespace CodeBase
                 SelectedObject.DOScale(_selectedObjectScale, _selectedObjectScaleDuration);
 
             if (parentObject == null) 
-                SelectedObject.SetParent(_pocketPoint);
+                SelectedObject.SetParent(_playerPrefab.InventoryPoint);
             else
                 selectedObject.SetParent(parentObject);
 

@@ -257,6 +257,11 @@ public static class Extensions
         return Vector3.Distance(original.position, target.position);
     }
 
+    public static void Unparent(this Transform original)
+    {
+        original.SetParent(null);
+    }
+    
     public static bool GetComponent<T>(this Transform original, out T component)
     {
         component = original.GetComponent<T>();

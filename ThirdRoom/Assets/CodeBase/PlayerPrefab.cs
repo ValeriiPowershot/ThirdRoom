@@ -15,7 +15,27 @@ namespace CodeBase
         [SerializeField] private FirstPersonCharacter _firstPersonCharacter;
         [SerializeField] private FirstPersonCharacterLookInput _firstPersonCharacterLookInput;
         
+        public FirstPersonCharacterInput FirstPersonCharacterInput
+        {
+            get => _firstPersonCharacterInput;
+            set => _firstPersonCharacterInput = value;
+        }
+        public FirstPersonCharacter FirstPersonCharacter
+        {
+            get => _firstPersonCharacter;
+            set => _firstPersonCharacter = value;
+        }
+        public FirstPersonCharacterLookInput FirstPersonCharacterLookInput
+        {
+            get => _firstPersonCharacterLookInput;
+            set => _firstPersonCharacterLookInput = value;
+        }
+
+        public HeadBobbing HeadBobbing;
+        public Transform PushPoint;
+        
         [Header("Points")]
+        [field: SerializeField] public Transform PocketPoint { get; set; }
         [field: SerializeField] public Transform InventoryPoint { get; private set; }
         
         public void BlockInput()
