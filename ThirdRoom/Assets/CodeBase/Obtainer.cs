@@ -2,7 +2,6 @@ using System;
 using CodeBase.Controls;
 using CodeBase.Data;
 using CodeBase.Interactions;
-using CodeBase.Inventory;
 using CodeBase.Inventory.Controller;
 using DG.Tweening;
 using UnityEditor;
@@ -39,7 +38,8 @@ namespace CodeBase
         public Vector3 StartRotation { get; private set; }
 
         private Transform _trailerDisposePosterPosition;
-
+        private Transform _selectedTransform;
+        
         private ObtainerUI _obtainerUI;
         private PlayerPrefab _playerPrefab;
         private InventoryController _inventoryController;
@@ -73,7 +73,8 @@ namespace CodeBase
         {
             StartPosition = transform.position;
             StartRotation = transform.rotation.eulerAngles;
-
+            _selectedTransform = transform;
+            
             _obtainerUI.OnDestroyRequested += OnDestroyRequested;
             _obtainerUI.OnMoveToStashRequested += OnMoveToStashRequested;
         }
@@ -89,6 +90,9 @@ namespace CodeBase
             Obtain();
         }
 
+        protected void SetSelectedTransform(Transform selectedTransform)
+            => _selectedTransform = selectedTransform;
+        
         private void Update()
         {
             if (!_isInspecting) return;
@@ -124,7 +128,7 @@ namespace CodeBase
         {
             _inputService.DisableActionMap(ActionMaps.Player);
             _inputService.EnableActionMap(ActionMaps.ObtainerUI);
-            _objectRotation.Activate(transform, _isScalingObject,null, MoveToCameraPlan);
+            _objectRotation.Activate(_selectedTransform, _isScalingObject, null, MoveToCameraPlain);
             _playerPrefab.BlockInput();
             _objectRotation.CanEscapeInput = true;
             RotateToCamera();
@@ -135,7 +139,7 @@ namespace CodeBase
             if (!string.IsNullOrEmpty(_currentItemPath))
             {
                 _currentItem = LoadItem(_currentItemPath);
-                _obtainerUI.Display(transform, _currentItem);
+                _obtainerUI.Display(_selectedTransform, _currentItem);
             }
 
             _isInspecting = true;
@@ -154,6 +158,7 @@ namespace CodeBase
             _playerPrefab.UnblockInput();
             _objectRotation.SelectedObject = null;
             Destroy(gameObject);
+            Destroy(_selectedTransform.gameObject);
         }
 
         private void CancelInspecting()
@@ -166,7 +171,7 @@ namespace CodeBase
             _isInspecting = false;
         }
 
-        private void MoveToCameraPlan()
+        private void MoveToCameraPlain()
         {
             if (Camera.main == null) return;
             transform.DOLocalMove(new Vector3(0, 0, -0.62f), 1f);
@@ -180,7 +185,7 @@ namespace CodeBase
             directionToCamera.y = 0;
 
             Quaternion targetRotation = Quaternion.LookRotation(directionToCamera);
-            transform.DORotateQuaternion(targetRotation, 1f).SetEase(Ease.InOutSine);
+            _selectedTransform.DORotateQuaternion(targetRotation, 1f).SetEase(Ease.InOutSine);
         }
 
         private Item LoadItem(string path)

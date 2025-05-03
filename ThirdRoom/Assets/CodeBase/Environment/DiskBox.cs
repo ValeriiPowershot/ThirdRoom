@@ -12,7 +12,11 @@ namespace CodeBase.Environment
         
         protected override void OnInteract()
         {
-            StartCoroutine(OpenAndShowcaseDiskRoutine(() => base.OnInteract()));
+            StartCoroutine(OpenAndShowcaseDiskRoutine(() =>
+            {
+                SetSelectedTransform(_diskTransform);
+                base.OnInteract();
+            }));
         }
 
         private IEnumerator OpenAndShowcaseDiskRoutine(Action onComplete)
@@ -20,7 +24,7 @@ namespace CodeBase.Environment
             float endYDiskPosition = _diskTransform.localPosition.y + 0.1f;
             
             yield return _upperSideTransform.DORotate(new Vector3(0f, 0f, 180f), 1f).WaitForCompletion();
-            yield return _diskTransform.DOLocalMoveY(endYDiskPosition, 1f);
+            yield return _diskTransform.DOLocalMoveY(endYDiskPosition, 1f).WaitForCompletion();
             
             onComplete?.Invoke();
         }
