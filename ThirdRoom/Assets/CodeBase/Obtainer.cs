@@ -17,7 +17,6 @@ namespace CodeBase
         public static event Action OnDeductiveObjectClaimed;
 
         [Header("Components")]
-        [SerializeField] private ObtainerUI _obtainerUI;
         [SerializeField] private bool _isScalingObject;
         [SerializeField] private bool _isDeductiveObject;
         [SerializeField] private bool _isRotatingObject;
@@ -27,7 +26,7 @@ namespace CodeBase
         [SerializeField] private bool _isStick;
 
         [Space(10)]
-        [SerializeField] private float _returnSpeed;
+        [SerializeField] private float _returnSpeed = 1f;
         
         [Space(10)]
         [Header("Full Description")]
@@ -36,11 +35,12 @@ namespace CodeBase
         [TextArea(3, 10)]
         [SerializeField] private string _fullDescription;
 
-        public Vector3 StartPosition { get; set; }
-        public Vector3 StartRotation { get; set; }
+        public Vector3 StartPosition { get; private set; }
+        public Vector3 StartRotation { get; private set; }
 
         private Transform _trailerDisposePosterPosition;
 
+        private ObtainerUI _obtainerUI;
         private PlayerPrefab _playerPrefab;
         private InventoryController _inventoryController;
         private ObjectRotation _objectRotation;
@@ -51,12 +51,14 @@ namespace CodeBase
         private string _currentItemPath;
 
         [Inject]
-        public void Construct(PlayerPrefab playerPrefab, InventoryController inventoryController, ObjectRotation objectRotation, IInputService inputService)
+        public void Construct(PlayerPrefab playerPrefab, InventoryController inventoryController,
+            ObjectRotation objectRotation, IInputService inputService, CentralUI centralUI)
         {
             _playerPrefab = playerPrefab;
             _inventoryController = inventoryController;
             _objectRotation = objectRotation;
             _inputService = inputService;
+            _obtainerUI = centralUI.ObtainerUI;
         }
 
         private void OnValidate()
@@ -80,6 +82,11 @@ namespace CodeBase
         {
             _obtainerUI.OnDestroyRequested -= OnDestroyRequested;
             _obtainerUI.OnMoveToStashRequested -= OnMoveToStashRequested;
+        }
+
+        protected override void OnInteract()
+        {
+            Obtain();
         }
 
         private void Update()
@@ -111,11 +118,6 @@ namespace CodeBase
                     CancelInspecting();
                 }
             }
-        }
-
-        protected override void OnInteract()
-        {
-            Obtain();
         }
 
         private void Obtain()

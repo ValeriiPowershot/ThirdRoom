@@ -9,17 +9,18 @@ namespace CodeBase.Inventory.Controller
 {
     public class InventoryController : MonoBehaviour
     {
-        [SerializeField] private InventoryView _view;
+        private InventoryView _view;
         private InventoryModel _model;
         private PlayerPrefab _playerPrefab;
         private IInputService _inputService;
 
         [Inject]
-        public void Construct(PlayerPrefab playerPrefab, IInputService inputService)
+        public void Construct(PlayerPrefab playerPrefab, IInputService inputService, CentralUI centralUI)
         {
             _playerPrefab = playerPrefab;
             _model = new InventoryModel();
             _inputService = inputService;
+            _view = centralUI.InventoryView;
         }
 
         private void Start()
@@ -69,14 +70,7 @@ namespace CodeBase.Inventory.Controller
 
         public void AddItem(Item item)
         {
-            if (_model.AddItem(item))
-            {
-                Debug.Log("Item added to inventory.");
-            }
-            else
-            {
-                Debug.Log("Item already exists in inventory.");
-            }
+            Debug.Log(_model.AddItem(item) ? "Item added to inventory." : "Item already exists in inventory.");
         }
     }
 }
