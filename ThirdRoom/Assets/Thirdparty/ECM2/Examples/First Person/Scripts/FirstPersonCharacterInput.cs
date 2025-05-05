@@ -1,18 +1,27 @@
+using CodeBase.Controls;
+using ECM2;
 using UnityEngine;
+using Zenject;
 
-namespace ECM2.Examples.FirstPerson
+namespace Thirdparty.ECM2.Examples.First_Person.Scripts
 {
     /// <summary>
-    /// First person character input.
+    /// First person character input using the new Input System.
     /// </summary>
-    
     public class FirstPersonCharacterInput : MonoBehaviour
     {
         public Character Character => _character;
-        
-        private Character _character;
 
         [SerializeField] private bool _enabled = true;
+
+        private Character _character;
+        private IInputService _inputService;
+
+        [Inject]
+        public void Construct(IInputService inputService)
+        {
+            _inputService = inputService;
+        }
         
         private void Awake()
         {
@@ -23,13 +32,7 @@ namespace ECM2.Examples.FirstPerson
         {
             if (!_enabled) return;
             
-            // Movement input, relative to character's view direction
-            
-            Vector2 inputMove = new()
-            {
-                x = Input.GetAxisRaw("Horizontal"),
-                y = Input.GetAxisRaw("Vertical")
-            };
+            Vector2 inputMove = _inputService.CurrentMoveDirection;
             
             Vector3 movementDirection =  Vector3.zero;
             
@@ -38,14 +41,12 @@ namespace ECM2.Examples.FirstPerson
 
             _character.SetMovementDirection(movementDirection);
             
-            // Crouch input
             
             if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.C))
                 _character.Crouch();
             else if (Input.GetKeyUp(KeyCode.LeftControl) || Input.GetKeyUp(KeyCode.C))
                 _character.UnCrouch();
             
-            // Jump input
             
             if (Input.GetButtonDown("Jump"))
                 _character.Jump();

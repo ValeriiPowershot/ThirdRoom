@@ -1,3 +1,4 @@
+using CodeBase.Controls;
 using CodeBase.Logic;
 using DG.Tweening;
 using UnityEngine;
@@ -20,11 +21,13 @@ namespace CodeBase.Interactions.Push
         private bool _canPutDown;
         private bool _inPlacementZone;
         private PlayerPrefab _playerPrefab;
+        private IInputService _inputService;
 
         [Inject]
-        public void Construct(PlayerPrefab playerPrefab)
+        public void Construct(PlayerPrefab playerPrefab, IInputService inputService)
         {
             _playerPrefab = playerPrefab;
+            _inputService = inputService;
         }
 
         private void Start()
@@ -36,7 +39,7 @@ namespace CodeBase.Interactions.Push
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.E) && _canPutDown)
+            if (_inputService.IsPushInteractPressed && _canPutDown)
             {
                 _playerPrefab.HeadBobbing.ToggleHeadBob(true);
                 
@@ -45,6 +48,19 @@ namespace CodeBase.Interactions.Push
                 transform.DORotate(_putDownPoint.transform.eulerAngles, 2);
                 
                 SetupValues(_startXSensitivity, _startYSensitivity, _startMovementSpeed);
+                
+                _inputService.DisableActionMap(ActionMaps.Push);
+                _inputService.EnableActionMap(ActionMaps.Player);
+            }
+            if (_inputService.IsPushInteractPressed && !_canPutDown)
+            {
+                _playerPrefab.HeadBobbing.ToggleHeadBob(true);
+                
+                transform.Unparent();
+                SetupValues(_startXSensitivity, _startYSensitivity, _startMovementSpeed);
+                
+                _inputService.DisableActionMap(ActionMaps.Push);
+                _inputService.EnableActionMap(ActionMaps.Player);
             }
         }
 
@@ -72,6 +88,9 @@ namespace CodeBase.Interactions.Push
             
             if (_canInteract && !_canPutDown)
             {
+                _inputService.DisableActionMap(ActionMaps.Player);
+                _inputService.EnableActionMap(ActionMaps.Push);
+                
                 _playerPrefab.HeadBobbing.ToggleHeadBob(false);
                 
                 transform.SetParent(_playerPrefab.PushPoint);

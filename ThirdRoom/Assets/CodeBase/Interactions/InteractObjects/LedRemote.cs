@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using ECM2.Examples.FirstPerson;
+using Thirdparty.ECM2.Examples.First_Person.Scripts;
 using UnityEngine;
 using static UnityEngine.Screen;
 

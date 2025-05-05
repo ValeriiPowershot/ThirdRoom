@@ -5,5 +5,6 @@
         public static readonly string Player = "Player";
         public static readonly string ObtainerUI = "ObtainerUI";
         public static readonly string Inventory = "Inventory";
+        public static readonly string Push = "Push";
     }
 }

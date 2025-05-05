@@ -1,5 +1,6 @@
 ﻿using CodeBase.Interactions;
 using ECM2.Examples.FirstPerson;
+using Thirdparty.ECM2.Examples.First_Person.Scripts;
 using UnityEngine;
 using UnityEngine.Serialization;
 

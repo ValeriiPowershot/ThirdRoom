@@ -8,10 +8,26 @@ namespace CodeBase.Controls
     {
         private readonly PlayerInputActions _inputActions;
         
+        private string _activeMap;
+
         public InputService()
         {
             _inputActions = new PlayerInputActions();
             _inputActions.Player.Enable();
+        }
+        
+        public Vector2 CurrentMoveDirection
+        {
+            get
+            {
+                if (_inputActions.Player.enabled)
+                    return _inputActions.Player.Move.ReadValue<Vector2>();
+
+                if (_inputActions.Push.enabled)
+                    return _inputActions.Push.Move.ReadValue<Vector2>();
+
+                return Vector2.zero;
+            }
         }
         
         public Vector2 MoveDirection => _inputActions.Player.Move.ReadValue<Vector2>();
@@ -23,6 +39,8 @@ namespace CodeBase.Controls
         public bool IsObtainerEscapePressed => _inputActions.ObtainerUI.Escape.WasPressedThisFrame();
         public bool IsNextButtonPressed => _inputActions.Inventory.NextItem.WasPressedThisFrame();
         public bool IsPreviousButtonPressed => _inputActions.Inventory.PreviousItem.WasPressedThisFrame();
+        public Vector2 PushDirection => _inputActions.Push.Move.ReadValue<Vector2>();
+        public bool IsPushInteractPressed => _inputActions.Push.Interact.WasPressedThisFrame();
 
         public void EnableActionMap(string actionMapName)
         {
