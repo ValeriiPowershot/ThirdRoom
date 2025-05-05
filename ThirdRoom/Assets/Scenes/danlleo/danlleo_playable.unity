@@ -133,7 +133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7266333098479182108, guid: ce97f31fce5e7d644b973a3744788e96, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7499178986511356701, guid: ce97f31fce5e7d644b973a3744788e96, type: 3}
       propertyPath: m_Pivot.x
@@ -214,6 +214,10 @@ PrefabInstance:
     - target: {fileID: 7499178986511356701, guid: ce97f31fce5e7d644b973a3744788e96, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8944756704616896582, guid: ce97f31fce5e7d644b973a3744788e96, type: 3}
+      propertyPath: m_text
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1181,7 +1185,7 @@ PrefabInstance:
     - target: {fileID: 3658742063025064605, guid: 28c0531195f591349a919292cdc94daf, type: 3}
       propertyPath: _objectRotation
       value: 
-      objectReference: {fileID: 1651964265}
+      objectReference: {fileID: 0}
     - target: {fileID: 4112207848268190841, guid: 28c0531195f591349a919292cdc94daf, type: 3}
       propertyPath: m_Name
       value: SceneContext
@@ -2156,17 +2160,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57f27b6720b747319305d4624149be13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1651964265 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2808977619830038699, guid: 89a01e7e555aa3f478062c3c3a5f0a22, type: 3}
-  m_PrefabInstance: {fileID: 1651964256}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec7051662deda434a845b3f3f87ad227, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1834374206
 GameObject:
   m_ObjectHideFlags: 0
@@ -2242,12 +2235,19 @@ MonoBehaviour:
   _isScalingObject: 0
   _isDeductiveObject: 0
   _isRotatingObject: 0
-  _isLetter: 0
+  _isLetter: 1
   _isStick: 0
-  _returnSpeed: 0
-  _hasFullDescription: 0
-  _title: 
-  _fullDescription: 
+  _returnSpeed: 1
+  _hasFullDescription: 1
+  _title: Nebula's Whisper
+  _fullDescription: "In a universe where dreams manifest as crystalline worlds, you
+    play as a Dreamweaver, tasked with shaping realms from the fragments of forgotten
+    imaginations. Explore surreal landscapes, solve mind-bending puzzles, and battle
+    ethereal creatures born from subconscious fears. Craft unique environments by
+    weaving emotions into reality, but beware\u2014every choice risks destabilizing
+    the delicate balance of the Dreamscape. With a blend of puzzle-platforming, narrative
+    exploration, and dynamic world-building, Nebula's Whisper offers a visually stunning,
+    procedurally generated journey where no two dreams are ever the same."
   _upperSideTransform: {fileID: 494095297}
   _diskTransform: {fileID: 614405605}
 --- !u!1 &2069891101
@@ -2411,14 +2411,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <IsInteractable>k__BackingField: 0
-  _description: 
+  _description: Turn On
   _disableAfterInteraction: 1
   _console: {fileID: 8162116264598785417}
   _soundPlayer: {fileID: 2069891108}
   _videoPlayer: {fileID: 2069891102}
-  _whiteNoiseClip: {fileID: 32900000, guid: 8ab38eb275b24bc41b7c034091f1bd58, type: 3}
-  _singleEyeClip: {fileID: 32900000, guid: 9e08b607df420724883be7d4a6181d1d, type: 3}
-  _oceanClip: {fileID: 32900000, guid: b03b07cd1efb0244b8c89f008179111b, type: 3}
+  _whiteNoiseClip:
+    <Clip>k__BackingField: {fileID: 32900000, guid: 8ab38eb275b24bc41b7c034091f1bd58, type: 3}
+    <Duration>k__BackingField: 2
+    <Description>k__BackingField: 
+  _singleEyeClip:
+    <Clip>k__BackingField: {fileID: 32900000, guid: 9e08b607df420724883be7d4a6181d1d, type: 3}
+    <Duration>k__BackingField: 3
+    <Description>k__BackingField: Three shout - one remains silent.
+  _oceanClip:
+    <Clip>k__BackingField: {fileID: 32900000, guid: b03b07cd1efb0244b8c89f008179111b, type: 3}
+    <Duration>k__BackingField: 2
+    <Description>k__BackingField: One calls with thunder, another with flame, the
+      third with shadows.
   _hintVideoClip: {fileID: 0}
 --- !u!114 &2069891108
 MonoBehaviour:

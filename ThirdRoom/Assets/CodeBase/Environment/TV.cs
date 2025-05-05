@@ -19,26 +19,22 @@ namespace CodeBase.Environment
 
         [Header("Videos")]
         [Space] 
-        [SerializeField] private VideoClip _whiteNoiseClip;
-        [SerializeField] private VideoClip _singleEyeClip;
-        [SerializeField] private VideoClip _oceanClip;
+        [SerializeField] private TVVideoClip _whiteNoiseClip;
+        [SerializeField] private TVVideoClip _singleEyeClip;
+        [SerializeField] private TVVideoClip _oceanClip;
         
         [Space]
         [SerializeField] private VideoClip _hintVideoClip;
         
         private Coroutine _tvAnimationRoutine;
-        private FMODAudioPlayer _audioPlayer;
+        private SubtitlesUI _subtitlesUI;
 
         [Inject]
-        public void Construct(FMODAudioPlayer audioPlayer)
-        {
-            _audioPlayer = audioPlayer;
-        }
+        public void Construct(CentralUI centralUI)
+            => _subtitlesUI = centralUI.SubtitlesUI;
         
-        protected override void OnInteract()
-        {
-            _tvAnimationRoutine = StartCoroutine(StartTVAnimationRoutine());
-        }
+        protected override void OnInteract() 
+            => _tvAnimationRoutine = StartCoroutine(StartTVAnimationRoutine());
 
         public void AllowInteract()
             => IsInteractable = true;
@@ -53,34 +49,33 @@ namespace CodeBase.Environment
         
         private IEnumerator StartTVAnimationRoutine()
         {
-            _videoPlayer.clip = _whiteNoiseClip;
-            _videoPlayer.Play();
-            _soundPlayer.Play();
+            while (true)
+            {
+                _videoPlayer.clip = _whiteNoiseClip.Clip;
+                _videoPlayer.Play();
+                _soundPlayer.Play();
 
-            yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(_whiteNoiseClip.Duration);
             
-            _videoPlayer.clip = _singleEyeClip;
-            _videoPlayer.Play();
-            _soundPlayer.Stop();
+                _videoPlayer.clip = _singleEyeClip.Clip;
+                _videoPlayer.Play();
+                _soundPlayer.Stop();
+                _subtitlesUI.DisplayMessage(_singleEyeClip.Description, _whiteNoiseClip.Duration - 0.1f);
             
-            yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(_singleEyeClip.Duration);
             
-            _videoPlayer.clip = _whiteNoiseClip;
-            _videoPlayer.Play();
-            _soundPlayer.Play();
+                _videoPlayer.clip = _whiteNoiseClip.Clip;
+                _videoPlayer.Play();
             
-            yield return new WaitForSeconds(3f);
+                yield return new WaitForSeconds(_whiteNoiseClip.Duration);
             
-            _soundPlayer.Stop();
-            _videoPlayer.clip = _oceanClip;
-            _videoPlayer.Play();
-            
-            yield return new WaitForSeconds(2f);
-            
-            _videoPlayer.clip = _whiteNoiseClip;
-            _videoPlayer.Play();
-            _soundPlayer.Play();
-            _console.AllowInteract();
+                _soundPlayer.Stop();
+                _videoPlayer.clip = _oceanClip.Clip;
+                _videoPlayer.Play();
+                _subtitlesUI.DisplayMessage(_oceanClip.Description, _oceanClip.Duration - 0.1f);
+                
+                yield return new WaitForSeconds(_oceanClip.Duration);
+            }
         }
     }
 }
