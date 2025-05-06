@@ -7,64 +7,40 @@ namespace CodeBase.Controls
     public class InputService : IInputService, IDisposable
     {
         private readonly PlayerInputActions _inputActions;
-        
-        private string _activeMap;
 
         public InputService()
         {
             _inputActions = new PlayerInputActions();
             _inputActions.Player.Enable();
         }
-        
-        public Vector2 CurrentMoveDirection
+
+        // IInputManager
+
+        #region IInputManager
+
+        public void EnableActionMap(ActionMapType actionMap)
         {
-            get
+            InputActionMap map = GetActionMap(actionMap);
+            if (map != null)
             {
-                if (_inputActions.Player.enabled)
-                    return _inputActions.Player.Move.ReadValue<Vector2>();
-
-                if (_inputActions.Push.enabled)
-                    return _inputActions.Push.Move.ReadValue<Vector2>();
-
-                return Vector2.zero;
-            }
-        }
-        
-        public Vector2 MoveDirection => _inputActions.Player.Move.ReadValue<Vector2>();
-        public bool IsJumpPressed => _inputActions.Player.Jump.WasPressedThisFrame();
-        public bool IsFirePressed => _inputActions.Player.Fire.WasPressedThisFrame();
-        public bool IsInteractPressed => _inputActions.Player.Interact.WasPressedThisFrame();
-        public bool IsObtainerReadPressed => _inputActions.ObtainerUI.Reading.WasPressedThisFrame();
-        public bool IsObtainerTakePressed => _inputActions.ObtainerUI.Take.WasPressedThisFrame();
-        public bool IsObtainerEscapePressed => _inputActions.ObtainerUI.Escape.WasPressedThisFrame();
-        public bool IsNextButtonPressed => _inputActions.Inventory.NextItem.WasPressedThisFrame();
-        public bool IsPreviousButtonPressed => _inputActions.Inventory.PreviousItem.WasPressedThisFrame();
-        public Vector2 PushDirection => _inputActions.Push.Move.ReadValue<Vector2>();
-        public bool IsPushInteractPressed => _inputActions.Push.Interact.WasPressedThisFrame();
-
-        public void EnableActionMap(string actionMapName)
-        {
-            InputActionMap actionMap = GetActionMap(actionMapName);
-            if (actionMap != null)
-            {
-                actionMap.Enable();
+                map.Enable();
             }
             else
             {
-                Debug.LogWarning($"Action Map '{actionMapName}' not found.");
+                Debug.LogWarning($"Action Map '{actionMap}' not found.");
             }
         }
 
-        public void DisableActionMap(string actionMapName)
+        public void DisableActionMap(ActionMapType actionMap)
         {
-            InputActionMap actionMap = GetActionMap(actionMapName);
-            if (actionMap != null)
+            InputActionMap map = GetActionMap(actionMap);
+            if (map != null)
             {
-                actionMap.Disable();
+                map.Disable();
             }
             else
             {
-                Debug.LogWarning($"Action Map '{actionMapName}' not found.");
+                Debug.LogWarning($"Action Map '{actionMap}' not found.");
             }
         }
 
@@ -78,15 +54,66 @@ namespace CodeBase.Controls
             return _inputActions;
         }
 
+        #endregion
+
+        #region IPlayerInput
+
+        public Vector2 MoveDirection => _inputActions.Player.Move.ReadValue<Vector2>();
+        public bool IsJumpPressed => _inputActions.Player.Jump.WasPressedThisFrame();
+        public bool IsFirePressed => _inputActions.Player.Fire.WasPressedThisFrame();
+        public bool IsInteractPressed => _inputActions.Player.Interact.WasPressedThisFrame();
+        public bool IsOpenInventoryPressed => _inputActions.Player.OpenInventory.WasPressedThisFrame();
+
+        #endregion
+        
+        #region IInventoryInput
+
+        public bool IsNextButtonPressed => _inputActions.Inventory.NextItem.WasPressedThisFrame();
+        public bool IsPreviousButtonPressed => _inputActions.Inventory.PreviousItem.WasPressedThisFrame();
+        public bool IsCloseInventoryPressed => _inputActions.Inventory.CloseInventory.WasPressedThisFrame();
+
+        #endregion
+        
+        #region IObtainerInput
+
+        public bool IsObtainerReadPressed => _inputActions.ObtainerUI.Reading.WasPressedThisFrame();
+        public bool IsObtainerTakePressed => _inputActions.ObtainerUI.Take.WasPressedThisFrame();
+        public bool IsObtainerEscapePressed => _inputActions.ObtainerUI.Escape.WasPressedThisFrame();
+
+        #endregion
+
+        #region IPushInput
+
+        public Vector2 PushDirection => _inputActions.Push.Move.ReadValue<Vector2>();
+        public bool IsPushInteractPressed => _inputActions.Push.Interact.WasPressedThisFrame();
+
+        #endregion
+
+        #region IInputService
+
+        public Vector2 CurrentMoveDirection
+        {
+            get
+            {
+                if (_inputActions.Player.enabled)
+                    return _inputActions.Player.Move.ReadValue<Vector2>();
+                if (_inputActions.Push.enabled)
+                    return _inputActions.Push.Move.ReadValue<Vector2>();
+                return Vector2.zero;
+            }
+        }
+
+        #endregion
+
         public void Dispose()
         {
-            _inputActions.Player.Disable();
+            _inputActions.Disable();
             _inputActions.Dispose();
         }
-        
-        private InputActionMap GetActionMap(string actionMapName)
+
+        private InputActionMap GetActionMap(ActionMapType actionMap)
         {
-            return _inputActions.asset.FindActionMap(actionMapName, throwIfNotFound: false);
+            return _inputActions.asset.FindActionMap(actionMap.ToString(), throwIfNotFound: false);
         }
     }
 }

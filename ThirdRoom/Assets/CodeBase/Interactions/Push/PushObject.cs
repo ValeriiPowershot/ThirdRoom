@@ -37,6 +37,23 @@ namespace CodeBase.Interactions.Push
             _startMovementSpeed = _playerPrefab.FirstPersonCharacter.maxWalkSpeed;
         }
 
+        protected override void OnInteract()
+        {
+            if (_canInteract && !_canPutDown)
+            {
+                _inputService.DisableActionMap(ActionMapType.Player);
+                _inputService.EnableActionMap(ActionMapType.Push);
+                
+                _playerPrefab.HeadBobbing.ToggleHeadBob(false);
+                
+                transform.SetParent(_playerPrefab.PushPoint);
+                transform.localPosition = new Vector3(0,transform.localPosition.y,0);
+                transform.localEulerAngles = Vector3.zero;
+                
+                SetupValues(_XSensitivity, _YSensitivity, _movementSpeed);
+            }
+        }
+
         private void Update()
         {
             if (_inputService.IsPushInteractPressed && _canPutDown)
@@ -49,8 +66,8 @@ namespace CodeBase.Interactions.Push
                 
                 SetupValues(_startXSensitivity, _startYSensitivity, _startMovementSpeed);
                 
-                _inputService.DisableActionMap(ActionMaps.Push);
-                _inputService.EnableActionMap(ActionMaps.Player);
+                _inputService.DisableActionMap(ActionMapType.Push);
+                _inputService.EnableActionMap(ActionMapType.Player);
             }
             if (_inputService.IsPushInteractPressed && !_canPutDown)
             {
@@ -59,46 +76,24 @@ namespace CodeBase.Interactions.Push
                 transform.Unparent();
                 SetupValues(_startXSensitivity, _startYSensitivity, _startMovementSpeed);
                 
-                _inputService.DisableActionMap(ActionMaps.Push);
-                _inputService.EnableActionMap(ActionMaps.Player);
+                _inputService.DisableActionMap(ActionMapType.Push);
+                _inputService.EnableActionMap(ActionMapType.Player);
             }
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(Tags.Player))
-            {
-                Debug.Log("asd");
+            if (other.CompareTag(Tags.Player)) 
                 _canInteract = true;
-            }
 
             if (other.CompareTag(Tags.PlacementZone)) 
                 _canPutDown = true;
         }
-        
+
         private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag(Tags.Player)) 
                 _canInteract = false;
-        }
-
-        protected override void OnInteract()
-        {
-            Debug.Log("dfd");
-            
-            if (_canInteract && !_canPutDown)
-            {
-                _inputService.DisableActionMap(ActionMaps.Player);
-                _inputService.EnableActionMap(ActionMaps.Push);
-                
-                _playerPrefab.HeadBobbing.ToggleHeadBob(false);
-                
-                transform.SetParent(_playerPrefab.PushPoint);
-                transform.localPosition = new Vector3(0,transform.localPosition.y,0);
-                transform.localEulerAngles = Vector3.zero;
-                
-                SetupValues(_XSensitivity, _YSensitivity, _movementSpeed);
-            }
         }
 
         private void SetupValues(float xSensitivity, float ySensitivity, float movementSpeed)
@@ -107,6 +102,5 @@ namespace CodeBase.Interactions.Push
             _playerPrefab.FirstPersonCharacterLookInput.mouseSensitivity.y = ySensitivity;
             _playerPrefab.FirstPersonCharacter.maxWalkSpeed = movementSpeed;
         }
-        
     }
 }

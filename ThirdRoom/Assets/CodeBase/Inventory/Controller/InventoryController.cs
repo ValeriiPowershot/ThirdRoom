@@ -7,6 +7,7 @@ using Zenject;
 
 namespace CodeBase.Inventory.Controller
 {
+    [DisallowMultipleComponent]
     public class InventoryController : MonoBehaviour
     {
         private InventoryView _view;
@@ -32,28 +33,27 @@ namespace CodeBase.Inventory.Controller
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Tab)) ToggleInventory();
+            if (_inputService.IsOpenInventoryPressed) OpenInventory();
+            if (_inputService.IsCloseInventoryPressed) CloseInventory();
             if (_inputService.IsNextButtonPressed) OnNextItem();
             if (_inputService.IsPreviousButtonPressed) OnPrevItem();
         }
 
-        private void ToggleInventory()
+        private void OpenInventory()
         {
-            if (_view.InventoryPanel.activeSelf)
-            {
-                _view.HideInventory();
-                _playerPrefab.UnlockCursor();
-                _playerPrefab.UnblockInput();
-                _inputService.DisableActionMap(ActionMaps.Inventory);
-            }
-            else
-            {
-                _inputService.EnableActionMap(ActionMaps.Inventory);
-                _view.ShowInventory();
-                _playerPrefab.LockCursor();
-                _playerPrefab.BlockInput();
-                _view.DisplayItem(_model.GetCurrentItem());
-            }
+            _inputService.EnableActionMap(ActionMapType.Inventory);
+            _view.ShowInventory();
+            _playerPrefab.LockCursor();
+            _playerPrefab.BlockInput();
+            _view.DisplayItem(_model.GetCurrentItem());
+        }
+
+        private void CloseInventory()
+        {
+            _view.HideInventory();
+            _playerPrefab.UnlockCursor();
+            _playerPrefab.UnblockInput();
+            _inputService.DisableActionMap(ActionMapType.Inventory);
         }
 
         private void OnNextItem()

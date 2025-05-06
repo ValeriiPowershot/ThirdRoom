@@ -126,8 +126,8 @@ namespace CodeBase
 
         private void Obtain()
         {
-            _inputService.DisableActionMap(ActionMaps.Player);
-            _inputService.EnableActionMap(ActionMaps.ObtainerUI);
+            _inputService.DisableActionMap(ActionMapType.Player);
+            _inputService.EnableActionMap(ActionMapType.ObtainerUI);
             _objectRotation.Activate(_selectedTransform, _isScalingObject, null, MoveToCameraPlain);
             _playerPrefab.BlockInput();
             _objectRotation.CanEscapeInput = true;
@@ -149,8 +149,8 @@ namespace CodeBase
         {
             if (_currentItem == null) return;
 
-            _inputService.DisableActionMap(ActionMaps.ObtainerUI);
-            _inputService.EnableActionMap(ActionMaps.Player);
+            _inputService.DisableActionMap(ActionMapType.ObtainerUI);
+            _inputService.EnableActionMap(ActionMapType.Player);
             _inventoryController.AddItem(_currentItem);
             Debug.Log($"{_currentItem.name} added to inventory.");
             _obtainerUI.ToggleMainCanvas(false);
@@ -163,8 +163,8 @@ namespace CodeBase
 
         private void CancelInspecting()
         {
-            _inputService.DisableActionMap(ActionMaps.ObtainerUI);
-            _inputService.EnableActionMap(ActionMaps.Player);
+            _inputService.DisableActionMap(ActionMapType.ObtainerUI);
+            _inputService.EnableActionMap(ActionMapType.Player);
             _obtainerUI.ToggleMainCanvas(false);
             _objectRotation.Deactivate();
             _playerPrefab.UnblockInput();
