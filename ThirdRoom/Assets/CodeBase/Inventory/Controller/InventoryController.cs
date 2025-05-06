@@ -31,12 +31,23 @@ namespace CodeBase.Inventory.Controller
             _view.HideInventory();
         }
 
+        private void OnDestroy()
+        {
+            _view.NextButton.onClick.RemoveListener(OnNextItem);
+            _view.PrevButton.onClick.RemoveListener(OnPrevItem);
+        }
+
         private void Update()
         {
             if (_inputService.IsOpenInventoryPressed) OpenInventory();
             if (_inputService.IsCloseInventoryPressed) CloseInventory();
             if (_inputService.IsNextButtonPressed) OnNextItem();
             if (_inputService.IsPreviousButtonPressed) OnPrevItem();
+        }
+
+        public void AddItem(Item item)
+        {
+            Debug.Log(_model.AddItem(item) ? "Item added to inventory." : "Item already exists in inventory.");
         }
 
         private void OpenInventory()
@@ -66,11 +77,6 @@ namespace CodeBase.Inventory.Controller
         {
             _model.PreviousItem();
             _view.DisplayItem(_model.GetCurrentItem());
-        }
-
-        public void AddItem(Item item)
-        {
-            Debug.Log(_model.AddItem(item) ? "Item added to inventory." : "Item already exists in inventory.");
         }
     }
 }

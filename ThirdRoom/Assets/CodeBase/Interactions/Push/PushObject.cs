@@ -1,16 +1,15 @@
 using System;
 using CodeBase.Controls;
-using CodeBase.Logic;
 using UnityEngine;
-using DG.Tweening;
+using UnityEngine.InputSystem;
 using Zenject;
 
 namespace CodeBase.Interactions.Push
 {
     public class PushObject : InteractObject
     {
-        [SerializeField] private float _XSensitivity;
-        [SerializeField] private float _YSensitivity;
+        [SerializeField] private float _xSensitivity;
+        [SerializeField] private float _ySensitivity;
         [SerializeField] private float _movementSpeed;
         [SerializeField] private GameObject _putDownPoint;
 
@@ -18,17 +17,16 @@ namespace CodeBase.Interactions.Push
         private float _startYSensitivity;
         private float _startMovementSpeed;
 
-        private bool _canInteract;
-        private bool _canPutDown;
         private PlayerPrefab _playerPrefab;
         private IInputService _inputService;
-        private bool _isHolding;
-
+        private PlayerInputActions.PushActions _pushActions;
+        
         [Inject]
         public void Construct(PlayerPrefab playerPrefab, IInputService inputService)
         {
             _playerPrefab = playerPrefab;
             _inputService = inputService;
+            _pushActions = _inputService.PushActions;
         }
 
         private void Start()
@@ -38,80 +36,58 @@ namespace CodeBase.Interactions.Push
             _startMovementSpeed = _playerPrefab.FirstPersonCharacter.maxWalkSpeed;
         }
 
-        protected override void OnInteract()
+        private void OnDestroy()
         {
-            print("ZALUPA");
-            
-            _inputService.EnableActionMap(ActionMapType.Push);
-            _inputService.DisableActionMap(ActionMapType.Player);
+            _pushActions.Interact.performed -= PerformPushInteract;
+            _pushActions.Interact.canceled -= PushInteractCancel;
         }
 
         private void Update()
         {
+            if (!_inputService.IsPushInteractPressed) return;
             
-            if (_inputService.IsPushInteractPressed)
-            {
-                if (!_isHolding)
-                {
-                    _isHolding = true;
+            OnHoldInteract();
+        }
 
-                    OnHoldInteract();
-                }
-            }
-            else
-            {
-                if (_isHolding)
-                {
-                    _isHolding = false;
-
-                    OnReleaseInteract();
-                }
-            }
+        protected override void OnInteract()
+        {
+            _inputService.EnableActionMap(ActionMapType.Push);
+            _inputService.DisableActionMap(ActionMapType.Player);
+            
+            _pushActions.Interact.canceled += PushInteractCancel;
+            _pushActions.Interact.performed += PerformPushInteract;
         }
 
         protected override void OnHoldInteract()
         {
-            _isHolding = true;
-            _playerPrefab.HeadBobbing.ToggleHeadBob(false);
-            transform.SetParent(_playerPrefab.PushPoint);
-
-            SetupValues(_XSensitivity, _YSensitivity, _movementSpeed);
+            SetupValues(_xSensitivity, _ySensitivity, _movementSpeed);
         }
 
         protected override void OnReleaseInteract(Action callback = null)
         {
-                _isHolding = false;
-                
-                _playerPrefab.HeadBobbing.ToggleHeadBob(true);
-                transform.SetParent(null);
+            _playerPrefab.HeadBobbing.ToggleHeadBob(true);
+            transform.SetParent(null);
 
-                SetupValues(_startXSensitivity, _startYSensitivity, _startMovementSpeed);
-                
-                callback?.Invoke();
-                
-                _inputService.DisableActionMap(ActionMapType.Push);
-                _inputService.EnableActionMap(ActionMapType.Player);
+            SetupValues(_startXSensitivity, _startYSensitivity, _startMovementSpeed);
+            
+            callback?.Invoke();
+            
+            _inputService.DisableActionMap(ActionMapType.Push);
+            _inputService.EnableActionMap(ActionMapType.Player);
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void PerformPushInteract(InputAction.CallbackContext _)
         {
-            if (other.CompareTag(Tags.Player))
-                _canInteract = true;
-
-            if (other.CompareTag(Tags.PlacementZone))
-                _canPutDown = true;
+            _playerPrefab.HeadBobbing.ToggleHeadBob(false);
+            transform.SetParent(_playerPrefab.PushPoint);
         }
 
-        private void OnTriggerExit(Collider other)
+        private void PushInteractCancel(InputAction.CallbackContext _)
         {
-            if (other.CompareTag(Tags.Player))
-            {
-                Debug.Log("Проебали");
-                _canInteract = false;
-            }
-
-            if (other.CompareTag(Tags.PlacementZone))
-                _canPutDown = false;
+            _pushActions.Interact.performed -= PerformPushInteract;
+            _pushActions.Interact.canceled -= PushInteractCancel;
+            
+            OnReleaseInteract();
         }
 
         private void SetupValues(float xSensitivity, float ySensitivity, float movementSpeed)

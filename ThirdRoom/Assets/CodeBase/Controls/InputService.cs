@@ -15,8 +15,6 @@ namespace CodeBase.Controls
             
         }
 
-        // IInputManager
-
         #region IInputManager
 
         public void EnableActionMap(ActionMapType actionMap)
@@ -85,8 +83,10 @@ namespace CodeBase.Controls
 
         #region IPushInput
 
+        public PlayerInputActions.PushActions PushActions => _inputActions.Push;
         public Vector2 PushDirection => _inputActions.Push.Move.ReadValue<Vector2>();
-        public bool IsPushInteractPressed => _inputActions.Push.Interact.ReadValue<float>() > 0.1f;
+        public bool IsPushInteractPressed => _inputActions.Push.Interact.WasPressedThisFrame();
+        public bool IsPushInteractReleased => _inputActions.Push.Interact.WasReleasedThisFrame();
 
         #endregion
 
@@ -111,7 +111,6 @@ namespace CodeBase.Controls
             _inputActions.Disable();
             _inputActions.Dispose();
         }
-
         private InputActionMap GetActionMap(ActionMapType actionMap)
         {
             return _inputActions.asset.FindActionMap(actionMap.ToString(), throwIfNotFound: false);
