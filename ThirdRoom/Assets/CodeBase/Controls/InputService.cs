@@ -7,11 +7,12 @@ namespace CodeBase.Controls
     public class InputService : IInputService, IDisposable
     {
         private readonly PlayerInputActions _inputActions;
-
+        
         public InputService()
         {
             _inputActions = new PlayerInputActions();
             _inputActions.Player.Enable();
+            
         }
 
         // IInputManager
@@ -85,7 +86,7 @@ namespace CodeBase.Controls
         #region IPushInput
 
         public Vector2 PushDirection => _inputActions.Push.Move.ReadValue<Vector2>();
-        public bool IsPushInteractPressed => _inputActions.Push.Interact.WasPressedThisFrame();
+        public bool IsPushInteractPressed => _inputActions.Push.Interact.ReadValue<float>() > 0.1f;
 
         #endregion
 

@@ -1,7 +1,8 @@
+using System;
 using CodeBase.Controls;
 using CodeBase.Logic;
-using DG.Tweening;
 using UnityEngine;
+using DG.Tweening;
 using Zenject;
 
 namespace CodeBase.Interactions.Push
@@ -12,16 +13,16 @@ namespace CodeBase.Interactions.Push
         [SerializeField] private float _YSensitivity;
         [SerializeField] private float _movementSpeed;
         [SerializeField] private GameObject _putDownPoint;
-        
+
         private float _startXSensitivity;
         private float _startYSensitivity;
         private float _startMovementSpeed;
-        
+
         private bool _canInteract;
         private bool _canPutDown;
-        private bool _inPlacementZone;
         private PlayerPrefab _playerPrefab;
         private IInputService _inputService;
+        private bool _isHolding;
 
         [Inject]
         public void Construct(PlayerPrefab playerPrefab, IInputService inputService)
@@ -39,61 +40,78 @@ namespace CodeBase.Interactions.Push
 
         protected override void OnInteract()
         {
-            if (_canInteract && !_canPutDown)
-            {
-                _inputService.DisableActionMap(ActionMapType.Player);
-                _inputService.EnableActionMap(ActionMapType.Push);
-                
-                _playerPrefab.HeadBobbing.ToggleHeadBob(false);
-                
-                transform.SetParent(_playerPrefab.PushPoint);
-                transform.localPosition = new Vector3(0,transform.localPosition.y,0);
-                transform.localEulerAngles = Vector3.zero;
-                
-                SetupValues(_XSensitivity, _YSensitivity, _movementSpeed);
-            }
+            print("ZALUPA");
+            
+            _inputService.EnableActionMap(ActionMapType.Push);
+            _inputService.DisableActionMap(ActionMapType.Player);
         }
 
         private void Update()
         {
-            if (_inputService.IsPushInteractPressed && _canPutDown)
+            
+            if (_inputService.IsPushInteractPressed)
             {
+                if (!_isHolding)
+                {
+                    _isHolding = true;
+
+                    OnHoldInteract();
+                }
+            }
+            else
+            {
+                if (_isHolding)
+                {
+                    _isHolding = false;
+
+                    OnReleaseInteract();
+                }
+            }
+        }
+
+        protected override void OnHoldInteract()
+        {
+            _isHolding = true;
+            _playerPrefab.HeadBobbing.ToggleHeadBob(false);
+            transform.SetParent(_playerPrefab.PushPoint);
+
+            SetupValues(_XSensitivity, _YSensitivity, _movementSpeed);
+        }
+
+        protected override void OnReleaseInteract(Action callback = null)
+        {
+                _isHolding = false;
+                
                 _playerPrefab.HeadBobbing.ToggleHeadBob(true);
-                
-                transform.Unparent();
-                transform.DOMove(_putDownPoint.transform.position,  2);
-                transform.DORotate(_putDownPoint.transform.eulerAngles, 2);
-                
+                transform.SetParent(null);
+
                 SetupValues(_startXSensitivity, _startYSensitivity, _startMovementSpeed);
+                
+                callback?.Invoke();
                 
                 _inputService.DisableActionMap(ActionMapType.Push);
                 _inputService.EnableActionMap(ActionMapType.Player);
-            }
-            if (_inputService.IsPushInteractPressed && !_canPutDown)
-            {
-                _playerPrefab.HeadBobbing.ToggleHeadBob(true);
-                
-                transform.Unparent();
-                SetupValues(_startXSensitivity, _startYSensitivity, _startMovementSpeed);
-                
-                _inputService.DisableActionMap(ActionMapType.Push);
-                _inputService.EnableActionMap(ActionMapType.Player);
-            }
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(Tags.Player)) 
+            if (other.CompareTag(Tags.Player))
                 _canInteract = true;
 
-            if (other.CompareTag(Tags.PlacementZone)) 
+            if (other.CompareTag(Tags.PlacementZone))
                 _canPutDown = true;
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag(Tags.Player)) 
+            if (other.CompareTag(Tags.Player))
+            {
+                Debug.Log("Проебали");
                 _canInteract = false;
+            }
+
+            if (other.CompareTag(Tags.PlacementZone))
+                _canPutDown = false;
         }
 
         private void SetupValues(float xSensitivity, float ySensitivity, float movementSpeed)
