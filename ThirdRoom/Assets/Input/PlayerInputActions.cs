@@ -273,6 +273,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Select"",
+                    ""type"": ""Button"",
+                    ""id"": ""aa1252d2-6703-4163-ab46-0ccb03cb14a6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -306,6 +315,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""CloseInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fb05ebf1-0876-48b0-958d-9e150b8fdd08"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Select"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -401,6 +421,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Inventory_NextItem = m_Inventory.FindAction("NextItem", throwIfNotFound: true);
         m_Inventory_PreviousItem = m_Inventory.FindAction("PreviousItem", throwIfNotFound: true);
         m_Inventory_CloseInventory = m_Inventory.FindAction("CloseInventory", throwIfNotFound: true);
+        m_Inventory_Select = m_Inventory.FindAction("Select", throwIfNotFound: true);
         // Push
         m_Push = asset.FindActionMap("Push", throwIfNotFound: true);
         m_Push_Move = m_Push.FindAction("Move", throwIfNotFound: true);
@@ -617,6 +638,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Inventory_NextItem;
     private readonly InputAction m_Inventory_PreviousItem;
     private readonly InputAction m_Inventory_CloseInventory;
+    private readonly InputAction m_Inventory_Select;
     public struct InventoryActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -624,6 +646,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @NextItem => m_Wrapper.m_Inventory_NextItem;
         public InputAction @PreviousItem => m_Wrapper.m_Inventory_PreviousItem;
         public InputAction @CloseInventory => m_Wrapper.m_Inventory_CloseInventory;
+        public InputAction @Select => m_Wrapper.m_Inventory_Select;
         public InputActionMap Get() { return m_Wrapper.m_Inventory; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -642,6 +665,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @CloseInventory.started += instance.OnCloseInventory;
             @CloseInventory.performed += instance.OnCloseInventory;
             @CloseInventory.canceled += instance.OnCloseInventory;
+            @Select.started += instance.OnSelect;
+            @Select.performed += instance.OnSelect;
+            @Select.canceled += instance.OnSelect;
         }
 
         private void UnregisterCallbacks(IInventoryActions instance)
@@ -655,6 +681,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @CloseInventory.started -= instance.OnCloseInventory;
             @CloseInventory.performed -= instance.OnCloseInventory;
             @CloseInventory.canceled -= instance.OnCloseInventory;
+            @Select.started -= instance.OnSelect;
+            @Select.performed -= instance.OnSelect;
+            @Select.canceled -= instance.OnSelect;
         }
 
         public void RemoveCallbacks(IInventoryActions instance)
@@ -745,6 +774,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnNextItem(InputAction.CallbackContext context);
         void OnPreviousItem(InputAction.CallbackContext context);
         void OnCloseInventory(InputAction.CallbackContext context);
+        void OnSelect(InputAction.CallbackContext context);
     }
     public interface IPushActions
     {

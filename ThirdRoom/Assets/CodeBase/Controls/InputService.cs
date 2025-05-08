@@ -70,7 +70,7 @@ namespace CodeBase.Controls
         public bool IsNextButtonPressed => _inputActions.Inventory.NextItem.WasPressedThisFrame();
         public bool IsPreviousButtonPressed => _inputActions.Inventory.PreviousItem.WasPressedThisFrame();
         public bool IsCloseInventoryPressed => _inputActions.Inventory.CloseInventory.WasPressedThisFrame();
-
+        public bool IsSelectInventoryPressed => _inputActions.Inventory.Select.WasPressedThisFrame();
         #endregion
         
         #region IObtainerInput

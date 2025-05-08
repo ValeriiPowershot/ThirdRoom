@@ -1,12 +1,12 @@
-﻿using CodeBase.Interactions;
+﻿using CodeBase.Data;
+using CodeBase.Interactions;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CodeBase.Environment
 {
-    public class Disk : InteractObject
+    public class Disk : Item
     {
-        protected override void OnInteract()
-        {
-            
-        }
+        [field: SerializeField] public DiskType DiskType { get; private set; }
     }
 }

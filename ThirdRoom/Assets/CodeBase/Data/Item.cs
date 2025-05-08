@@ -1,9 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CodeBase.Data
 {
-	public class Item : MonoBehaviour
+	public abstract class Item : MonoBehaviour
 	{
 		[field: SerializeField] public string ItemName { get; private set; }
 		[field: SerializeField] public GameObject Item3DModel { get; private set; }

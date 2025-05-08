@@ -1,6 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using CodeBase.Audio;
+using CodeBase.Data;
 using CodeBase.Interactions;
+using CodeBase.Inventory.Controller;
 using DG.Tweening;
 using FMODUnity;
 using UnityEngine;
@@ -25,18 +29,60 @@ namespace CodeBase.Environment
         [SerializeField] private EventReference _driveRunSound;
         
         private FMODAudioPlayer _audioPlayer;
-
+        private InventoryController _inventory;
+        private Dictionary<DiskType, Action> _diskActions;
+        
         [Inject]
-        private void Construct(FMODAudioPlayer audioPlayer)
+        private void Construct(FMODAudioPlayer audioPlayer, InventoryController inventory)
         {
             _audioPlayer = audioPlayer;
+            _inventory = inventory;
         }
-        
+
+        private void Start()
+        {
+            _diskActions = new Dictionary<DiskType, Action>
+            {
+                { DiskType.Gloom , GloomTvEffect},
+                { DiskType.Hidden, HiddenTvEffect},
+                { DiskType.Steampunk, SteamTvEffect},
+                { DiskType.Whisper, WhisperTvEffect},
+                
+            };
+        }
+
+        private void SteamTvEffect()
+        {
+        }
+
+        private void WhisperTvEffect()
+        {
+        }
+
+        private void HiddenTvEffect()
+        {
+        }
+
+        private void GloomTvEffect()
+        {
+        }
+
         protected override void OnInteract()
         {
-            StartCoroutine(TryInsertAndValidateDiskRoutine(_insertedDisk));
+            _inventory.OnItemSelected += OnItemSelected; 
+            _inventory.OpenInventory();
+            // StartCoroutine(TryInsertAndValidateDiskRoutine(_insertedDisk));
         }
-        
+
+        private void OnItemSelected(Item obj)
+        {
+            if (obj is not Disk disk)
+                return;
+
+            _inventory.OnItemSelected -= OnItemSelected;
+            StartCoroutine(TryInsertAndValidateDiskRoutine(disk));
+        }
+
         public void AllowInteract()
             => IsInteractable = true;
         
@@ -45,7 +91,10 @@ namespace CodeBase.Environment
             _insertedDisk = disk;
             _insertedDisk.transform.position = _initialPlacePoint.position;
             _insertedDisk.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
-
+            
+            if (_diskActions.TryGetValue(disk.DiskType, out Action action))
+                action.Invoke();
+   
             yield return new WaitForSeconds(1f);
             
             // TODO player insert disk sound
