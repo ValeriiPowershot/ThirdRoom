@@ -95,8 +95,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 385e117de89328343adc970a972a6bb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerPrefab: {fileID: 0}
-  _objectRotation: {fileID: 0}
+  _playerPrefab: {fileID: 4761347944800922007, guid: 89a01e7e555aa3f478062c3c3a5f0a22, type: 3}
+  _objectRotation: {fileID: 5371499013172428102, guid: 89a01e7e555aa3f478062c3c3a5f0a22, type: 3}
 --- !u!114 &2429845782243106809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,5 +109,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a28888736224d7439bbecddba009efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventoryView: {fileID: 0}
-  _inventoryController: {fileID: 0}
+  _inventoryController: {fileID: 388241319707602801, guid: 89a01e7e555aa3f478062c3c3a5f0a22, type: 3}

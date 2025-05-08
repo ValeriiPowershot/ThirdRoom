@@ -28,7 +28,7 @@ namespace CodeBase
 
         private PlayerPrefab _playerPrefab;
         
-        private Vector3 _selectedObjectScale = new(0.24f, 0.3897f, 0.0032f);
+        private readonly Vector3 _selectedObjectScale = new(0.24f, 0.3897f, 0.0032f);
 
         [Inject]
         public void Construct(PlayerPrefab playerPrefab)
@@ -42,15 +42,16 @@ namespace CodeBase
             HandleMouseInput();
         }
 
-        public void Activate(Transform selectedObject, bool isScaling, Transform parentObject = null, Action onMoved = null)
+        public void Activate(Transform selectedObject, bool isScaling, Transform parentObject = null,
+            Action onMoved = null)
         {
             _isActivate = true;
             SelectedObject = selectedObject;
-            
-            if (isScaling) 
+
+            if (isScaling)
                 SelectedObject.DOScale(_selectedObjectScale, _selectedObjectScaleDuration);
 
-            if (parentObject == null) 
+            if (parentObject == null)
                 SelectedObject.SetParent(_playerPrefab.InventoryPoint);
             else
                 selectedObject.SetParent(parentObject);
@@ -60,9 +61,8 @@ namespace CodeBase
                 _isActivate = true;
                 onMoved?.Invoke();
             });
-
         }
-        
+
         public void Deactivate()
         {
             SelectedObject = null;

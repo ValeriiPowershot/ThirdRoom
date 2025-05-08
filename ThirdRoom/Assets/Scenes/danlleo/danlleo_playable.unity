@@ -946,7 +946,7 @@ PrefabInstance:
     - target: {fileID: 3658742063025064605, guid: 28c0531195f591349a919292cdc94daf, type: 3}
       propertyPath: _objectRotation
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 5371499013172428102, guid: 89a01e7e555aa3f478062c3c3a5f0a22, type: 3}
     - target: {fileID: 4112207848268190841, guid: 28c0531195f591349a919292cdc94daf, type: 3}
       propertyPath: m_Name
       value: SceneContext

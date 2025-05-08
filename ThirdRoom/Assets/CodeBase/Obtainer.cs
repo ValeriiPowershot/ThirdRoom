@@ -61,14 +61,6 @@ namespace CodeBase
             _obtainerUI = centralUI.ObtainerUI;
         }
 
-        private void OnValidate()
-        {
-            _objectRotation = FindFirstObjectByType<ObjectRotation>();
-#if UNITY_EDITOR
-            EditorUtility.SetDirty(this);
-#endif
-        }
-
         private void Start()
         {
             StartPosition = transform.position;
@@ -133,14 +125,8 @@ namespace CodeBase
             _objectRotation.CanEscapeInput = true;
             RotateToCamera();
 
-            _currentItemPath = _isStick ? "InventoryObjects/Stick" :
-                               _isLetter ? "InventoryObjects/Letter" : string.Empty;
-
-            if (!string.IsNullOrEmpty(_currentItemPath))
-            {
-                _currentItem = LoadItem(_currentItemPath);
-                _obtainerUI.Display(_selectedTransform, _currentItem);
-            }
+            _currentItem = new Item(_title, _fullDescription);
+            _obtainerUI.Display(_selectedTransform, _currentItem);
 
             _isInspecting = true;
         }
@@ -152,11 +138,11 @@ namespace CodeBase
             _inputService.DisableActionMap(ActionMapType.ObtainerUI);
             _inputService.EnableActionMap(ActionMapType.Player);
             _inventoryController.AddItem(_currentItem);
-            Debug.Log($"{_currentItem.name} added to inventory.");
             _obtainerUI.ToggleMainCanvas(false);
             _isInspecting = false;
             _playerPrefab.UnblockInput();
             _objectRotation.SelectedObject = null;
+            
             Destroy(gameObject);
             Destroy(_selectedTransform.gameObject);
         }
@@ -186,11 +172,6 @@ namespace CodeBase
 
             Quaternion targetRotation = Quaternion.LookRotation(directionToCamera);
             _selectedTransform.DORotateQuaternion(targetRotation, 1f).SetEase(Ease.InOutSine);
-        }
-
-        private Item LoadItem(string path)
-        {
-            return Resources.Load<Item>(path);
         }
 
         private void OnMoveToStashRequested(Transform target)

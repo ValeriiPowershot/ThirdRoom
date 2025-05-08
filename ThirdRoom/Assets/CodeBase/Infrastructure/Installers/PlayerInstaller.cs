@@ -10,11 +10,11 @@ namespace CodeBase.Infrastructure.Installers
         
         public override void InstallBindings()
         {
-            PlayerInputInstall();
+            PlayerPrefabInstall();
             ObjectRotationInstall();
         }
 
-        private void PlayerInputInstall()
+        private void PlayerPrefabInstall()
         {
             Container.Bind<PlayerPrefab>().FromInstance(_playerPrefab).AsSingle().NonLazy();
         }
