@@ -11,7 +11,7 @@ using Zenject;
 namespace CodeBase
 {
     [DisallowMultipleComponent]
-    public class Obtainer : InteractObject
+    public abstract class Obtainer : InteractObject
     {
         public static event Action OnDeductiveObjectClaimed;
 
@@ -34,12 +34,13 @@ namespace CodeBase
         [TextArea(3, 10)]
         [SerializeField] private string _fullDescription;
 
+        [SerializeField] private Item _item;
         public Vector3 StartPosition { get; private set; }
         public Vector3 StartRotation { get; private set; }
 
         private Transform _trailerDisposePosterPosition;
         private Transform _selectedTransform;
-        
+
         private ObtainerUI _obtainerUI;
         private PlayerPrefab _playerPrefab;
         private InventoryController _inventoryController;
@@ -47,7 +48,6 @@ namespace CodeBase
         private IInputService _inputService;
 
         private bool _isInspecting;
-        private Item _currentItem;
         private string _currentItemPath;
 
         [Inject]
@@ -66,16 +66,24 @@ namespace CodeBase
             StartPosition = transform.position;
             StartRotation = transform.rotation.eulerAngles;
             _selectedTransform = transform;
-            
+
+            if (!_obtainerUI)
+                return;
+
             _obtainerUI.OnDestroyRequested += OnDestroyRequested;
             _obtainerUI.OnMoveToStashRequested += OnMoveToStashRequested;
         }
 
         private void OnDestroy()
         {
+            if (!_obtainerUI)
+                return;
+            
             _obtainerUI.OnDestroyRequested -= OnDestroyRequested;
             _obtainerUI.OnMoveToStashRequested -= OnMoveToStashRequested;
         }
+
+        public abstract void OnConfirmedObtain();
 
         protected override void OnInteract()
         {
@@ -84,7 +92,7 @@ namespace CodeBase
 
         protected void SetSelectedTransform(Transform selectedTransform)
             => _selectedTransform = selectedTransform;
-        
+
         private void Update()
         {
             if (!_isInspecting) return;
@@ -124,27 +132,28 @@ namespace CodeBase
             _playerPrefab.BlockInput();
             _objectRotation.CanEscapeInput = true;
             RotateToCamera();
-
-            _currentItem = new Item(_title, _fullDescription);
-            _obtainerUI.Display(_selectedTransform, _currentItem);
+            
+            _obtainerUI.Display(_selectedTransform, _item);
 
             _isInspecting = true;
         }
 
         private void ConfirmObtain()
         {
-            if (_currentItem == null) return;
+            if (_item == null) return;
 
             _inputService.DisableActionMap(ActionMapType.ObtainerUI);
             _inputService.EnableActionMap(ActionMapType.Player);
-            _inventoryController.AddItem(_currentItem);
+            _inventoryController.AddItem(_item);
             _obtainerUI.ToggleMainCanvas(false);
             _isInspecting = false;
             _playerPrefab.UnblockInput();
             _objectRotation.SelectedObject = null;
             
-            Destroy(gameObject);
-            Destroy(_selectedTransform.gameObject);
+            OnConfirmedObtain();
+            // Вот это вынести в оверрайд ток там где надо
+            // Destroy(gameObject);
+            // Destroy(_selectedTransform.gameObject);
         }
 
         private void CancelInspecting()

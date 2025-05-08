@@ -9,7 +9,12 @@ namespace CodeBase.Environment
     {
         [SerializeField] private Transform _upperSideTransform;
         [SerializeField] private Transform _diskTransform;
-        
+
+        public override void OnConfirmedObtain()
+        {
+            
+        }
+
         protected override void OnInteract()
         {
             StartCoroutine(OpenAndShowcaseDiskRoutine(() =>

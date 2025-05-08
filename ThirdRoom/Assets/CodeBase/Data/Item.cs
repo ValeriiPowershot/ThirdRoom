@@ -3,18 +3,11 @@ using UnityEngine;
 
 namespace CodeBase.Data
 {
-    [Serializable]
-    public class Item
-    {
-        public string ItemName { get; private set; } 
-        public GameObject Item3DModel { get; private set; }
-        public string ItemDescription { get; private set; }
-        public int Index;
-        
-        public Item(string itemName, string itemDescription)
-        {
-            ItemName = itemName;
-            ItemDescription = itemDescription;
-        }
-    }
+	public class Item : MonoBehaviour
+	{
+		[field: SerializeField] public string ItemName { get; private set; }
+		[field: SerializeField] public GameObject Item3DModel { get; private set; }
+		[field: SerializeField] public string ItemDescription { get; private set; }
+		public int Index;
+	}
 }

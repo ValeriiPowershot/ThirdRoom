@@ -52,13 +52,25 @@ namespace CodeBase.Inventory.Controller
 
         private void OpenInventory()
         {
+            Item currentItem = _model.GetCurrentItem();
             _inputService.EnableActionMap(ActionMapType.Inventory);
             _view.ShowInventory();
             _playerPrefab.LockCursor();
             _playerPrefab.BlockInput();
-            _view.DisplayItem(_model.GetCurrentItem());
+            SetLayerRecursively(currentItem.gameObject, LayerMask.NameToLayer(TagsAndLayers.InventoryObjectLayer));
+            _view.DisplayItem(currentItem);
         }
+        private void SetLayerRecursively(GameObject obj, int newLayer)
+        {
+            if (obj == null) return;
 
+            obj.layer = newLayer;
+
+            foreach (Transform child in obj.transform)
+            {
+                SetLayerRecursively(child.gameObject, newLayer);
+            }
+        }
         private void CloseInventory()
         {
             _view.HideInventory();

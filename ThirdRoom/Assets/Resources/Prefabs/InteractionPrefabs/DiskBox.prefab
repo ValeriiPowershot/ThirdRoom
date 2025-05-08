@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 438840950170652823}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.4399, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.0069616437, z: 0}
   m_LocalScale: {x: 0.25, y: 0.02, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -110,8 +110,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 931261778672095399}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.12618019, y: 0.4396046, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.12618019, y: -0.0072570443, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -261,7 +261,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.26849943, y: 0.06008315, z: 0.25623977}
-  m_Center: {x: 0.0020433068, y: 0.44543886, z: -0.004086584}
+  m_Center: {x: 0.0020433068, y: -0.0014227927, z: -0.004086584}
 --- !u!114 &262444469894277149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -293,6 +293,7 @@ MonoBehaviour:
     the delicate balance of the Dreamscape. With a blend of puzzle-platforming, narrative
     exploration, and dynamic world-building, Nebula's Whisper offers a visually stunning,
     procedurally generated journey where no two dreams are ever the same."
+  _item: {fileID: 0}
   _upperSideTransform: {fileID: 6839852230295159757}
   _diskTransform: {fileID: 6360548043724204854}
 --- !u!114 &4974693629235207504
@@ -307,7 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 725563b7422b42b499e9c9e014ccd4db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Id: danlleo_playable_ee536c25-63da-4c2b-95d7-117c411dd17a
+  Id: DiskBox_4e0c0734-7038-4025-adaa-4b4eec4c8c9d
 --- !u!1 &7077038039691318880
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,8 +336,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7077038039691318880}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.000000023841858, y: 0.4481, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.000000023841858, y: 0.0012383461, z: 0}
   m_LocalScale: {x: 0.15, y: 0, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children: []

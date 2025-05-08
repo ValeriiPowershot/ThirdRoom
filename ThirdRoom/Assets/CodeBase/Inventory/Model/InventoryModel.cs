@@ -5,13 +5,13 @@ namespace CodeBase.Inventory.Model
 {
     public class InventoryModel
     {
-        private readonly List<Item> _items = new();
+        private readonly List<Item> _items = new List<Item>();
         public IReadOnlyList<Item> Items => _items;
         public int CurrentIndex { get; private set; }
 
         public bool AddItem(Item newItem)
         {
-            if (_items.Exists(i => i.Index == newItem.Index))
+            if (_items.Contains(newItem))
                 return false;
 
             _items.Add(newItem);

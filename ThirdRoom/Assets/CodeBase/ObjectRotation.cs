@@ -52,7 +52,13 @@ namespace CodeBase
                 SelectedObject.DOScale(_selectedObjectScale, _selectedObjectScaleDuration);
 
             if (parentObject == null)
+            {
+                print(SelectedObject);
+                print(_playerPrefab);
+                print(name);
+                print(_playerPrefab.InventoryPoint);
                 SelectedObject.SetParent(_playerPrefab.InventoryPoint);
+            }
             else
                 selectedObject.SetParent(parentObject);
 
