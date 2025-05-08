@@ -216,6 +216,7 @@ GameObject:
   - component: {fileID: 7061546736891923108}
   - component: {fileID: 262444469894277149}
   - component: {fileID: 4974693629235207504}
+  - component: {fileID: 531753461393136038}
   m_Layer: 6
   m_Name: DiskBox
   m_TagString: Untagged
@@ -294,7 +295,7 @@ MonoBehaviour:
     the delicate balance of the Dreamscape. With a blend of puzzle-platforming, narrative
     exploration, and dynamic world-building, Nebula's Whisper offers a visually stunning,
     procedurally generated journey where no two dreams are ever the same."
-  _item: {fileID: 0}
+  _item: {fileID: 531753461393136038}
   _upperSideTransform: {fileID: 6839852230295159757}
   _diskTransform: {fileID: 6360548043724204854}
 --- !u!114 &4974693629235207504
@@ -309,7 +310,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 725563b7422b42b499e9c9e014ccd4db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Id: DiskBox_a7396361-2b78-438c-8e33-950f018f386f
+  Id: DiskBox_f3249488-e1e0-41c1-a0a4-275fd4d81ce4
+--- !u!114 &531753461393136038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5456280104303232321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a9d45441f934bbeab67a5c5158b3bb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ItemName>k__BackingField: 
+  <Item3DModel>k__BackingField: {fileID: 0}
+  <ItemDescription>k__BackingField: 
+  Index: 0
+  <DiskType>k__BackingField: 0
 --- !u!1 &6546012535403433976
 GameObject:
   m_ObjectHideFlags: 0
@@ -430,7 +448,6 @@ GameObject:
   - component: {fileID: 6360548043724204854}
   - component: {fileID: 6168068405542986765}
   - component: {fileID: 513998219900926049}
-  - component: {fileID: 9145404310406287448}
   m_Layer: 6
   m_Name: Disk
   m_TagString: Untagged
@@ -506,18 +523,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &9145404310406287448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7077038039691318880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a9d45441f934bbeab67a5c5158b3bb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <IsInteractable>k__BackingField: 1
-  _description: Game #1
-  _disableAfterInteraction: 1
