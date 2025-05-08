@@ -80,6 +80,7 @@ namespace CodeBase.Environment
                 return;
 
             _inventory.OnItemSelected -= OnItemSelected;
+            _inventory.CloseInventory();
             StartCoroutine(TryInsertAndValidateDiskRoutine(disk));
         }
 
@@ -89,8 +90,8 @@ namespace CodeBase.Environment
         private IEnumerator TryInsertAndValidateDiskRoutine(Disk disk)
         {
             _insertedDisk = disk;
-            _insertedDisk.transform.position = _initialPlacePoint.position;
-            _insertedDisk.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
+            _insertedDisk.Disk3DModel.transform.position = _initialPlacePoint.position;
+            _insertedDisk.Disk3DModel.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
             
             if (_diskActions.TryGetValue(disk.DiskType, out Action action))
                 action.Invoke();
@@ -99,8 +100,8 @@ namespace CodeBase.Environment
             
             // TODO player insert disk sound
             
-            _insertedDisk.transform.DORotate(new Vector3(45f, 0f, 90f), _insertSpeed).SetEase(Ease.InOutQuad);
-            _insertedDisk.transform.DOMove(_targetPlacePoint.position, _insertSpeed).SetEase(Ease.InOutQuad)
+            _insertedDisk.Disk3DModel.transform.DORotate(new Vector3(45f, 0f, 90f), _insertSpeed).SetEase(Ease.InOutQuad);
+            _insertedDisk.Disk3DModel.transform.DOMove(_targetPlacePoint.position, _insertSpeed).SetEase(Ease.InOutQuad)
                 .WaitForCompletion();
             
             // TODO play drive run sound

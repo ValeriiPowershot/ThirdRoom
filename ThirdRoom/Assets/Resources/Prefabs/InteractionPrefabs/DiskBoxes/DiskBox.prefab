@@ -116,6 +116,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8555735336969076868}
+  - {fileID: 8086027161156876073}
   m_Father: {fileID: 8106552671982748934}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3342043719290608973
@@ -240,7 +241,6 @@ Transform:
   - {fileID: 6839852230295159757}
   - {fileID: 6360548043724204854}
   - {fileID: 4979504584190876898}
-  - {fileID: 8086027161156876073}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &7061546736891923108
@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 725563b7422b42b499e9c9e014ccd4db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Id: DiskBox_f3249488-e1e0-41c1-a0a4-275fd4d81ce4
+  Id: DiskBox_a4f0e4e1-9d07-4653-9c8b-fd7b6a5cb109
 --- !u!114 &531753461393136038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,11 +323,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a9d45441f934bbeab67a5c5158b3bb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: 
-  <Item3DModel>k__BackingField: {fileID: 0}
-  <ItemDescription>k__BackingField: 
-  Index: 0
-  <DiskType>k__BackingField: 0
+  <ItemName>k__BackingField: 12
+  <Item3DModel>k__BackingField: {fileID: 5456280104303232321}
+  <ItemDescription>k__BackingField: 21
+  Index: 3
+  <DiskType>k__BackingField: 1
+  <Disk3DModel>k__BackingField: {fileID: 7077038039691318880}
 --- !u!1 &6546012535403433976
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,12 +356,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6546012535403433976}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.000000024214387, y: 0.0234, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.12618022, y: 0.030657038, z: 0}
   m_LocalScale: {x: 0.023807703, y: 0.023807703, z: 0.023807703}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8106552671982748934}
+  m_Father: {fileID: 6839852230295159757}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1330180509296642969
 MeshFilter:

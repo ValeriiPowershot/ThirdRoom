@@ -1015,7 +1015,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &813178248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1980,6 +1980,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 1984DiskBox
       objectReference: {fileID: 0}
+    - target: {fileID: 108050467989286929, guid: c8083199b8574f143a6d7a43aee5359c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4199329819480092758, guid: c8083199b8574f143a6d7a43aee5359c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2037,6 +2041,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GloomDiskBox
       objectReference: {fileID: 0}
+    - target: {fileID: 108050467989286929, guid: 49093c92b40f0ca4dae09183894e16d6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4199329819480092758, guid: 49093c92b40f0ca4dae09183894e16d6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2093,6 +2101,10 @@ PrefabInstance:
     - target: {fileID: 108050467989286929, guid: 163bd5d6d3bbb02418528287981e461a, type: 3}
       propertyPath: m_Name
       value: WhispDiskBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 108050467989286929, guid: 163bd5d6d3bbb02418528287981e461a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4199329819480092758, guid: 163bd5d6d3bbb02418528287981e461a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2208,6 +2220,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HiddenOnesDiskBox
       objectReference: {fileID: 0}
+    - target: {fileID: 108050467989286929, guid: cd27b2086df9d864c828932600897812, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4199329819480092758, guid: cd27b2086df9d864c828932600897812, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2261,10 +2277,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 262444469894277149, guid: 3dbfe1507a1d5d842b9889e42f5a1c5d, type: 3}
-      propertyPath: _item
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 5456280104303232321, guid: 3dbfe1507a1d5d842b9889e42f5a1c5d, type: 3}
       propertyPath: m_Name
       value: DiskBox
